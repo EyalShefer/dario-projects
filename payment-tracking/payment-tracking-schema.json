@@ -1,0 +1,158 @@
+{
+  "payment_funnel": {
+    "name": "Conversion Funnel: Free → Paid",
+    "stages": [
+      {
+        "stage": 1,
+        "name": "Free User",
+        "event": "app_open",
+        "criteria": "user_subscription_tier = 'free'"
+      },
+      {
+        "stage": 2,
+        "name": "Paywall Viewed",
+        "event": "subscription_initiated",
+        "criteria": "user_clicked_upgrade"
+      },
+      {
+        "stage": 3,
+        "name": "Payment Attempted",
+        "event": "subscription_initiated",
+        "criteria": "payment_form_submitted"
+      },
+      {
+        "stage": 4,
+        "name": "Purchase Completed",
+        "event": "subscription_purchased",
+        "criteria": "payment_successful = true"
+      },
+      {
+        "stage": 5,
+        "name": "Active Subscriber",
+        "event": "user_engagement",
+        "criteria": "subscription_active AND days_since_purchase < 30"
+      }
+    ]
+  },
+  "ltv_calculation": {
+    "name": "Lifetime Value (LTV)",
+    "formula": "Average Revenue Per User * Average Subscription Length (months)",
+    "tracking": {
+      "arpu_monthly": {
+        "metric": "revenue / active_users",
+        "unit": "BRL",
+        "tracked_in": "Firebase Analytics + Stripe"
+      },
+      "average_subscription_length": {
+        "metric": "days_until_cancellation / 30",
+        "unit": "months",
+        "tracked_in": "Stripe API"
+      },
+      "churn_rate": {
+        "metric": "cancelled_subscriptions / active_subscriptions",
+        "unit": "percentage",
+        "tracked_in": "Firebase + Stripe"
+      }
+    }
+  },
+  "cac_calculation": {
+    "name": "Customer Acquisition Cost (CAC)",
+    "formula": "Total Ad Spend / New Customers Acquired",
+    "tracking": {
+      "ad_spend": {
+        "metric": "total spend on Facebook Ads",
+        "unit": "BRL",
+        "tracked_in": "Facebook Ads Manager"
+      },
+      "new_customers": {
+        "metric": "subscription_purchased event count",
+        "unit": "count",
+        "tracked_in": "GA4 + Stripe"
+      },
+      "payback_period": {
+        "metric": "CAC / ARPU (months to recover cost)",
+        "unit": "days",
+        "target": "≤60 days"
+      }
+    }
+  },
+  "retention_tracking": {
+    "name": "Retention Cohorts",
+    "cohorts": [
+      {
+        "name": "D1 Retention",
+        "definition": "% of users who open app on Day 2 after install",
+        "target": "≥30%",
+        "calculation": "users_with_d2_session / total_installs"
+      },
+      {
+        "name": "D7 Retention",
+        "definition": "% of users who open app on Day 7 after install",
+        "target": "≥25%",
+        "calculation": "users_with_d7_session / total_installs"
+      },
+      {
+        "name": "D30 Retention",
+        "definition": "% of users who open app on Day 30 after install",
+        "target": "≥15%",
+        "calculation": "users_with_d30_session / total_installs"
+      },
+      {
+        "name": "Paid Retention (D7)",
+        "definition": "% of paid users still subscribed on Day 7",
+        "target": "≥80%",
+        "calculation": "active_subscriptions_d7 / new_subscriptions_d0"
+      }
+    ]
+  },
+  "revenue_tracking": {
+    "name": "Revenue Metrics",
+    "metrics": [
+      {
+        "metric": "Total Revenue",
+        "unit": "BRL",
+        "source": "Stripe API",
+        "frequency": "daily"
+      },
+      {
+        "metric": "ARPU (Average Revenue Per User)",
+        "unit": "BRL/month",
+        "formula": "Total Monthly Revenue / Total Active Users",
+        "target": "≥R$3-5",
+        "frequency": "daily"
+      },
+      {
+        "metric": "Conversion Rate",
+        "unit": "percentage",
+        "formula": "Paying Users / Total Users",
+        "target": "≥2-3%",
+        "frequency": "daily"
+      },
+      {
+        "metric": "MRR (Monthly Recurring Revenue)",
+        "unit": "BRL",
+        "formula": "Active Subscriptions * Average Monthly Price",
+        "target": "≥R$2000/month by Month 1",
+        "frequency": "daily"
+      }
+    ]
+  },
+  "stripe_webhook_events": {
+    "charge.succeeded": {
+      "description": "Subscription payment successful",
+      "action": "Log to Firebase, increment user revenue counter"
+    },
+    "charge.failed": {
+      "description": "Subscription payment failed",
+      "action": "Send retry notification to user, log failure reason"
+    },
+    "customer.subscription.updated": {
+      "description": "User changed subscription tier",
+      "action": "Update user segment in Firebase, log tier change"
+    },
+    "customer.subscription.deleted": {
+      "description": "User cancelled subscription (churn)",
+      "action": "Mark user as churned, log cancellation reason, calculate LTV"
+    }
+  }
+}

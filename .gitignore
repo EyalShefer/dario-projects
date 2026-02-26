@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+*.key
+*.pem
+google-services.json
+GoogleService-Info.plist
+.env
+.env.local
+firebase-config/secrets/
+build/
+dist/

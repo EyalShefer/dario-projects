@@ -1,0 +1,128 @@
+{
+  "ga4_events": {
+    "app_open": {
+      "name": "app_open",
+      "description": "User opens app",
+      "category": "engagement",
+      "parameters": {
+        "session_id": "string",
+        "user_id": "string (encrypted)",
+        "install_source": "string (organic|facebook_ads|other)"
+      }
+    },
+    "level_start": {
+      "name": "level_start",
+      "description": "User starts a game/level",
+      "category": "engagement",
+      "parameters": {
+        "level_id": "integer",
+        "level_name": "string",
+        "game_type": "string (addition|subtraction|counting|etc)",
+        "difficulty": "integer (1-5)",
+        "tier_access": "string (free|basic|premium)"
+      }
+    },
+    "level_complete": {
+      "name": "level_complete",
+      "description": "User finishes a game/level",
+      "category": "engagement",
+      "parameters": {
+        "level_id": "integer",
+        "level_name": "string",
+        "score": "integer",
+        "stars_earned": "integer (1-3)",
+        "time_spent_seconds": "integer",
+        "completed_successfully": "boolean"
+      }
+    },
+    "subscription_initiated": {
+      "name": "subscription_initiated",
+      "description": "User starts subscription flow",
+      "category": "monetization",
+      "parameters": {
+        "tier": "string (basic|premium|annual)",
+        "trial_length_days": "integer",
+        "entry_point": "string (paywall|after_games|settings)"
+      }
+    },
+    "subscription_purchased": {
+      "name": "purchase",
+      "description": "Successful subscription purchase",
+      "category": "monetization",
+      "parameters": {
+        "value": "float (BRL)",
+        "currency": "string (BRL)",
+        "items": [
+          {
+            "item_id": "string (basic|premium|annual)",
+            "item_name": "string",
+            "price": "float"
+          }
+        ],
+        "transaction_id": "string",
+        "payment_method": "string (card|boleto|pix)"
+      }
+    },
+    "subscription_failed": {
+      "name": "subscription_failed",
+      "description": "Failed payment attempt",
+      "category": "monetization",
+      "parameters": {
+        "tier": "string",
+        "error_code": "string",
+        "error_message": "string",
+        "payment_method": "string"
+      }
+    },
+    "subscription_cancelled": {
+      "name": "subscription_cancelled",
+      "description": "User cancelled subscription",
+      "category": "monetization",
+      "parameters": {
+        "tier": "string",
+        "reason": "string (optional)",
+        "subscription_length_days": "integer"
+      }
+    },
+    "user_session": {
+      "name": "user_engagement",
+      "description": "Session end (aggregate metrics)",
+      "category": "engagement",
+      "parameters": {
+        "session_duration_seconds": "integer",
+        "games_played": "integer",
+        "total_score": "integer",
+        "levels_completed": "integer"
+      }
+    },
+    "ad_shown": {
+      "name": "ad_impression",
+      "description": "Ad impression (free tier)",
+      "category": "monetization",
+      "parameters": {
+        "ad_format": "string (banner|interstitial|rewarded)",
+        "ad_network": "string (admob|etc)",
+        "placement": "string (between_levels|main_menu)"
+      }
+    },
+    "ad_clicked": {
+      "name": "ad_click",
+      "description": "User clicked ad",
+      "category": "monetization",
+      "parameters": {
+        "ad_format": "string",
+        "ad_network": "string"
+      }
+    },
+    "app_crash": {
+      "name": "app_crash",
+      "description": "App crash (via Crashlytics)",
+      "category": "health",
+      "parameters": {
+        "crash_reason": "string",
+        "stack_trace": "string",
+        "os_version": "string"
+      }
+    }
+  }
+}

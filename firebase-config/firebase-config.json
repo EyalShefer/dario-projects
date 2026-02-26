@@ -1,0 +1,41 @@
+{
+  "project": {
+    "projectId": "captain-count-brazil",
+    "projectName": "Captain Count - Brazil",
+    "region": "south-america-east1"
+  },
+  "apps": {
+    "android": {
+      "packageName": "com.wizdi.captaincount",
+      "displayName": "Captain Count",
+      "sha1Fingerprint": "TO_BE_GENERATED",
+      "appId": "1:FIREBASE_APP_ID_ANDROID",
+      "apiKey": "FIREBASE_API_KEY_ANDROID",
+      "storageBucket": "captain-count-brazil.appspot.com"
+    },
+    "ios": {
+      "bundleId": "com.wizdi.captaincount",
+      "displayName": "Captain Count",
+      "appId": "1:FIREBASE_APP_ID_IOS",
+      "apiKey": "FIREBASE_API_KEY_IOS",
+      "storageBucket": "captain-count-brazil.appspot.com"
+    }
+  },
+  "analytics": {
+    "enabled": true,
+    "measurementId": "G-MEASUREMENT_ID",
+    "googleAnalyticsId": "GA4_PROPERTY_ID"
+  },
+  "firestore": {
+    "enabled": true,
+    "defaultDatabase": "(default)"
+  },
+  "crashlytics": {
+    "enabled": true,
+    "collectCrashReports": true
+  },
+  "performance": {
+    "enabled": true,
+    "collectionEnabled": true
+  }
+}
