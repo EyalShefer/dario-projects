@@ -1,41 +1,45 @@
 {
-  "project": {
-    "projectId": "captain-count-brazil",
-    "projectName": "Captain Count - Brazil",
-    "region": "south-america-east1"
+  "firebase": {
+    "projectId": "captain-count---brazil",
+    "projectNumber": "502516302106",
+    "apiKey": "AIzaSyDjVyKFgfqVnFuSLY0zUXotwdBzkf4ncCk",
+    "authDomain": "captain-count---brazil.firebaseapp.com",
+    "databaseURL": "https://captain-count---brazil.firebaseio.com",
+    "storageBucket": "captain-count---brazil.firebasestorage.app",
+    "messagingSenderId": "502516302106",
+    "appId": {
+      "web": "1:502516302106:web:d12a65f8083ccb72b42ca3",
+      "android": "1:502516302106:android:5d4d0076f5ea8e51b42ca3",
+      "ios": "1:502516302106:ios:3ed8f6f66b2e0ab4b42ca3"
+    },
+    "measurementId": "G-QLM8HYMNRW"
   },
   "apps": {
     "android": {
-      "packageName": "com.wizdi.captaincount",
-      "displayName": "Captain Count",
-      "sha1Fingerprint": "TO_BE_GENERATED",
-      "appId": "1:FIREBASE_APP_ID_ANDROID",
-      "apiKey": "FIREBASE_API_KEY_ANDROID",
-      "storageBucket": "captain-count-brazil.appspot.com"
+      "package": "com.wizdi.captaincount",
+      "appId": "1:502516302106:android:5d4d0076f5ea8e51b42ca3",
+      "configFile": "google-services.json",
+      "status": "registered"
     },
     "ios": {
-      "bundleId": "com.wizdi.captaincount",
-      "displayName": "Captain Count",
-      "appId": "1:FIREBASE_APP_ID_IOS",
-      "apiKey": "FIREBASE_API_KEY_IOS",
-      "storageBucket": "captain-count-brazil.appspot.com"
+      "bundle": "com.wizdi.captaincount",
+      "appId": "1:502516302106:ios:3ed8f6f66b2e0ab4b42ca3",
+      "configFile": "GoogleService-Info.plist",
+      "status": "registered"
+    },
+    "web": {
+      "name": "Captain Count Web",
+      "appId": "1:502516302106:web:d12a65f8083ccb72b42ca3",
+      "status": "registered"
     }
   },
   "analytics": {
-    "enabled": true,
-    "measurementId": "G-MEASUREMENT_ID",
-    "googleAnalyticsId": "GA4_PROPERTY_ID"
+    "type": "GA4",
+    "measurementId": "G-QLM8HYMNRW",
+    "status": "active",
+    "linkedAccount": "wizdi"
   },
-  "firestore": {
-    "enabled": true,
-    "defaultDatabase": "(default)"
-  },
-  "crashlytics": {
-    "enabled": true,
-    "collectCrashReports": true
-  },
-  "performance": {
-    "enabled": true,
-    "collectionEnabled": true
-  }
+  "createdAt": "2026-02-27T16:00:00Z",
+  "createdBy": "Eyal",
+  "status": "active"
 }

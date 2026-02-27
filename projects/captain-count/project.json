@@ -26,12 +26,13 @@
       "id": 1,
       "name": "Analytics & Tracking Setup",
       "status": "in_progress",
-      "progress_percent": 50,
+      "progress_percent": 75,
       "started_at": "2026-02-26T22:20:00Z",
       "completed_at": null,
       "duration_minutes": null,
       "estimated_hours": 2,
       "description": "Firebase, GA4, Mixpanel setup + payment tracking schema + Stripe integration",
+      "note": "Firebase + GA4 complete (Eyal). Awaiting Stripe account setup."
       "subtasks": [
         {
           "name": "Documentation & Templates",
@@ -40,15 +41,17 @@
         },
         {
           "name": "Firebase Project Setup",
-          "status": "pending",
+          "status": "completed",
           "description": "Create Firebase project in console, add Android + iOS apps, get credentials",
-          "assigned_to": "Eyal"
+          "completed_by": "Eyal",
+          "completed_at": "2026-02-27T16:00:00Z"
         },
         {
           "name": "GA4 Property Setup",
-          "status": "pending",
+          "status": "completed",
           "description": "Create GA4 property, link to Firebase, configure custom events/dimensions",
-          "assigned_to": "Eyal"
+          "completed_by": "Eyal",
+          "completed_at": "2026-02-27T16:00:00Z"
         },
         {
           "name": "Stripe Account Setup",
