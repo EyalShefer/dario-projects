@@ -824,7 +824,9 @@
                                                     </div>
                                                     ${subtask.description ? `<div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.3rem;">${subtask.description}</div>` : ''}
                                                 </div>
-                                                ${subtask.assigned_to ? `<div style="background: ${subtask.assigned_to === 'Eyal' ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)'}; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; white-space: nowrap;">
+                                                ${subtask.status === 'completed' && subtask.completed_by ? `<div style="background: rgba(16,185,129,0.2); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; white-space: nowrap; color: var(--status-success);">
+                                                    ✅ ${subtask.completed_by}
+                                                </div>` : subtask.assigned_to ? `<div style="background: ${subtask.assigned_to === 'Eyal' ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)'}; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; white-space: nowrap;">
                                                     ${subtask.assigned_to === 'Eyal' ? '🔴 WAITING FOR: Eyal' : '✅ ' + subtask.assigned_to}
                                                 </div>` : ''}
                                             </div>

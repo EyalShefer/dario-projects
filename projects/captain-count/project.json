@@ -32,7 +32,7 @@
       "duration_minutes": null,
       "estimated_hours": 2,
       "description": "Firebase, GA4, Mixpanel setup + payment tracking schema + Stripe integration",
-      "note": "Firebase + GA4 complete (Eyal). Awaiting Stripe account setup."
+      "note": "Firebase + GA4 complete (Eyal). Awaiting Stripe account setup.",
       "subtasks": [
         {
           "name": "Documentation & Templates",
