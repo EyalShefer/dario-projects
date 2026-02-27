@@ -556,6 +556,7 @@
         // ========== GLOBAL STATE ==========
         let projectsData = null;
         let selectedProject = null;
+        let projectDetails = {};
 
         // ========== UTILITIES ==========
         function timeAgo(dateString) {
@@ -583,19 +584,44 @@
             });
         }
 
-        // ========== LOAD DATA ==========
+        // ========== LOAD DATA (Phase 3) ==========
         async function loadData() {
             try {
                 const response = await fetch('./index.json');
                 projectsData = await response.json();
                 renderProjects();
                 updateLastUpdated();
+                
+                // Pre-load all project details for faster switching
+                await preloadAllProjectDetails();
             } catch (error) {
                 console.error('Failed to load data:', error);
+                document.getElementById('projects-tbody').innerHTML = 
+                    '<tr><td colspan="4" style="text-align: center; color: var(--status-error); padding: 2rem;">Failed to load projects</td></tr>';
             }
         }
 
-        // ========== RENDER PROJECTS TABLE ==========
+        // ========== PRELOAD ALL PROJECT DETAILS ==========
+        async function preloadAllProjectDetails() {
+            if (!projectsData) return;
+            
+            for (const project of projectsData.projects) {
+                try {
+                    const response = await fetch(`./projects/${project.id}/project.json`);
+                    projectDetails[project.id] = await response.json();
+                    
+                    // Also load task logs if available
+                    const logsResponse = await fetch(`./projects/${project.id}/task-1-logs.json`);
+                    if (logsResponse.ok) {
+                        projectDetails[`${project.id}-logs-1`] = await logsResponse.json();
+                    }
+                } catch (error) {
+                    console.warn(`Could not preload details for ${project.id}:`, error);
+                }
+            }
+        }
+
+        // ========== RENDER PROJECTS TABLE (Phase 3) ==========
         function renderProjects() {
             if (!projectsData) return;
 
@@ -625,24 +651,31 @@
             });
         }
 
-        // ========== SELECT PROJECT ==========
+        // ========== SELECT PROJECT (Phase 3) ==========
         async function selectProject(projectId) {
             selectedProject = projectsData.projects.find(p => p.id === projectId);
             if (!selectedProject) return;
 
-            // Load project details
-            try {
-                const response = await fetch(`./${projectId}/project.json`);
-                const projectDetails = await response.json();
-                renderProjectDetails(projectDetails);
-                renderProjects(); // Update table styling
-            } catch (error) {
-                console.error('Failed to load project details:', error);
+            // Use preloaded data if available
+            const projectDetail = projectDetails[projectId];
+            if (projectDetail) {
+                renderProjectDetails(projectDetail, projectId);
+            } else {
+                // Fallback to fetch if not preloaded
+                try {
+                    const response = await fetch(`./projects/${projectId}/project.json`);
+                    const detail = await response.json();
+                    renderProjectDetails(detail, projectId);
+                } catch (error) {
+                    console.error('Failed to load project details:', error);
+                }
             }
+            
+            renderProjects(); // Update table styling
         }
 
-        // ========== RENDER PROJECT DETAILS ==========
-        function renderProjectDetails(project) {
+        // ========== RENDER PROJECT DETAILS (Phase 4) ==========
+        function renderProjectDetails(project, projectId) {
             const panel = document.getElementById('detail-panel');
             
             let html = `
@@ -678,13 +711,13 @@
 
             if (project.tasks && project.tasks.length > 0) {
                 project.tasks.forEach((task, index) => {
-                    const statusClass = task.status === 'completed' ? 'status-success' : 
-                                       task.status === 'in_progress' ? 'accent-blue' : 'status-pending';
+                    const logsData = projectDetails[`${projectId}-logs-${task.id}`];
+                    const logsHtml = logsData ? generateLogsHtml(logsData.logs) : '';
                     
                     html += `
                         <div class="task-card" onclick="toggleTaskDetails(this)">
                             <div class="task-header">
-                                <div>
+                                <div style="flex: 1;">
                                     <div class="task-name">Task ${task.id}: ${task.name}</div>
                                     <div class="task-description">${task.description || ''}</div>
                                 </div>
@@ -705,14 +738,24 @@
                                         <div class="stat-label">Duration</div>
                                         <div class="stat-value">${task.duration_minutes ? task.duration_minutes + 'm' : '-'}</div>
                                     </div>
+                                    ${task.started_at ? `<div class="stat">
+                                        <div class="stat-label">Started</div>
+                                        <div class="stat-value">${formatDate(task.started_at)}</div>
+                                    </div>` : ''}
+                                    ${task.completed_at ? `<div class="stat">
+                                        <div class="stat-label">Completed</div>
+                                        <div class="stat-value">${formatDate(task.completed_at)}</div>
+                                    </div>` : ''}
                                 </div>
-                                <div class="logs-list" id="logs-${index}">
-                                    ${task.status === 'completed' ? '<div class="log-entry"><span class="log-severity success">SUCCESS</span><div class="log-message">Task completed</div></div>' : '<div class="log-entry"><span class="log-severity info">PENDING</span><div class="log-message">Awaiting execution</div></div>'}
+                                <div class="logs-list">
+                                    ${logsHtml || '<div class="log-entry"><span class="log-severity info">ℹ️</span><div class="log-message">No logs yet</div></div>'}
                                 </div>
                             </div>
                         </div>
                     `;
                 });
+            } else {
+                html += '<div style="color: var(--text-secondary); padding: 2rem; text-align: center;">No tasks defined</div>';
             }
 
             html += `
@@ -724,7 +767,25 @@
             panel.classList.remove('hidden');
         }
 
-        // ========== TOGGLE TASK DETAILS ==========
+        // ========== GENERATE LOGS HTML (Phase 4) ==========
+        function generateLogsHtml(logs) {
+            if (!logs || logs.length === 0) return '';
+            
+            return logs.map(log => `
+                <div class="log-entry">
+                    <div>
+                        <span class="log-severity ${log.severity || 'info'}">
+                            ${log.severity === 'success' ? '✓' : log.severity === 'error' ? '✕' : 'ℹ️'}
+                        </span>
+                        <span class="log-time">${formatDate(log.timestamp)}</span>
+                    </div>
+                    <div class="log-message">${log.message}</div>
+                    ${log.artifacts ? `<div style="color: var(--accent-blue); font-size: 0.8rem; margin-top: 0.3rem;">📦 ${log.artifacts.join(', ')}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // ========== TOGGLE TASK DETAILS (Phase 4) ==========
         function toggleTaskDetails(element) {
             const body = element.querySelector('.task-body');
             body.classList.toggle('show');
@@ -739,9 +800,14 @@
             }
         }
 
-        // ========== AUTO-REFRESH ==========
-        setInterval(() => {
-            loadData();
+        // ========== AUTO-REFRESH (Phase 5) ==========
+        let refreshCount = 0;
+        setInterval(async () => {
+            await loadData();
+            refreshCount++;
+            if (selectedProject) {
+                await selectProject(selectedProject.id);
+            }
         }, 30000); // Every 30 seconds
 
         // ========== INIT ==========
