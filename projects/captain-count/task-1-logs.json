@@ -1,10 +1,12 @@
 {
   "task_id": 1,
   "task_name": "Analytics & Tracking Setup",
-  "status": "completed",
+  "status": "in_progress",
+  "progress_percent": 50,
   "started_at": "2026-02-26T22:20:00Z",
-  "completed_at": "2026-02-26T22:50:00Z",
-  "duration_minutes": 30,
+  "completed_at": null,
+  "duration_minutes": null,
+  "note": "Documentation phase (Dario) complete. Awaiting manual console setup (Eyal).",
   "logs": [
     {
       "timestamp": "2026-02-26T22:20:00Z",

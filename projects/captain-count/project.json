@@ -25,13 +25,38 @@
     {
       "id": 1,
       "name": "Analytics & Tracking Setup",
-      "status": "completed",
-      "progress_percent": 100,
+      "status": "in_progress",
+      "progress_percent": 50,
       "started_at": "2026-02-26T22:20:00Z",
-      "completed_at": "2026-02-26T22:50:00Z",
-      "duration_minutes": 30,
-      "estimated_hours": 0.5,
-      "description": "Firebase, GA4, Mixpanel setup + payment tracking schema + Stripe integration"
+      "completed_at": null,
+      "duration_minutes": null,
+      "estimated_hours": 2,
+      "description": "Firebase, GA4, Mixpanel setup + payment tracking schema + Stripe integration",
+      "subtasks": [
+        {
+          "name": "Documentation & Templates",
+          "status": "completed",
+          "description": "ANALYTICS_SETUP.md, firebase-config.json, GA4 schema, payment tracking schema, event checklist"
+        },
+        {
+          "name": "Firebase Project Setup",
+          "status": "pending",
+          "description": "Create Firebase project in console, add Android + iOS apps, get credentials",
+          "assigned_to": "Eyal"
+        },
+        {
+          "name": "GA4 Property Setup",
+          "status": "pending",
+          "description": "Create GA4 property, link to Firebase, configure custom events/dimensions",
+          "assigned_to": "Eyal"
+        },
+        {
+          "name": "Stripe Account Setup",
+          "status": "pending",
+          "description": "Create Stripe account (Brazil), enable Card/Boleto/PIX, create products",
+          "assigned_to": "Eyal"
+        }
+      ]
     },
     {
       "id": 2,

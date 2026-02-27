@@ -1,18 +1,20 @@
 {
   "system": "דריו",
   "system_id": "dario",
-  "last_updated": "2026-02-27T12:50:00Z",
+  "last_updated": "2026-02-27T15:00:00Z",
   "projects": [
     {
       "id": "captain-count",
       "name": "Captain Count",
       "description": "Math education game for K-2 (Brazil-first)",
       "status": "in_progress",
-      "progress_percent": 12,
+      "progress_percent": 10,
       "started_at": "2026-02-26",
-      "updated_at": "2026-02-27T22:50:00Z",
-      "tasks_completed": 1,
+      "updated_at": "2026-02-27T15:00:00Z",
+      "tasks_completed": 0,
       "tasks_total": 8,
+      "tasks_in_progress": 1,
+      "note": "Task 1 (50% complete): Documentation done, awaiting manual Firebase/GA4/Stripe setup",
       "artifacts": []
     },
     {
