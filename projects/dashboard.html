@@ -106,6 +106,40 @@
             gap: 0.5rem;
         }
 
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--status-error);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--status-success);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
         .projects-table {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -586,8 +620,15 @@
 
         // ========== LOAD DATA (Phase 3) ==========
         async function loadData() {
+            const tbody = document.getElementById('projects-tbody');
+            
             try {
+                // Show loading state
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem;"><div class="loading-spinner"></div> Loading projects...</td></tr>';
+                
                 const response = await fetch('./index.json');
+                if (!response.ok) throw new Error('Failed to fetch index.json');
+                
                 projectsData = await response.json();
                 renderProjects();
                 updateLastUpdated();
@@ -596,8 +637,13 @@
                 await preloadAllProjectDetails();
             } catch (error) {
                 console.error('Failed to load data:', error);
-                document.getElementById('projects-tbody').innerHTML = 
-                    '<tr><td colspan="4" style="text-align: center; color: var(--status-error); padding: 2rem;">Failed to load projects</td></tr>';
+                tbody.innerHTML = `
+                    <tr><td colspan="4">
+                        <div class="error-message">
+                            ⚠️ Failed to load projects: ${error.message}
+                        </div>
+                    </td></tr>
+                `;
             }
         }
 
@@ -656,19 +702,30 @@
             selectedProject = projectsData.projects.find(p => p.id === projectId);
             if (!selectedProject) return;
 
-            // Use preloaded data if available
-            const projectDetail = projectDetails[projectId];
-            if (projectDetail) {
-                renderProjectDetails(projectDetail, projectId);
-            } else {
-                // Fallback to fetch if not preloaded
-                try {
+            // Show loading state
+            const panel = document.getElementById('detail-panel');
+            panel.innerHTML = '<div style="text-align: center; padding: 3rem;"><div class="loading-spinner"></div> Loading project details...</div>';
+            panel.classList.remove('hidden');
+
+            try {
+                // Use preloaded data if available
+                const projectDetail = projectDetails[projectId];
+                if (projectDetail) {
+                    renderProjectDetails(projectDetail, projectId);
+                } else {
+                    // Fallback to fetch if not preloaded
                     const response = await fetch(`./projects/${projectId}/project.json`);
+                    if (!response.ok) throw new Error('Failed to fetch project.json');
                     const detail = await response.json();
                     renderProjectDetails(detail, projectId);
-                } catch (error) {
-                    console.error('Failed to load project details:', error);
                 }
+            } catch (error) {
+                console.error('Failed to load project details:', error);
+                panel.innerHTML = `
+                    <div class="error-message">
+                        ⚠️ Failed to load project details: ${error.message}
+                    </div>
+                `;
             }
             
             renderProjects(); // Update table styling
@@ -802,17 +859,43 @@
 
         // ========== AUTO-REFRESH (Phase 5) ==========
         let refreshCount = 0;
+        let lastRefreshTime = Date.now();
+        
+        function showRefreshIndicator() {
+            const indicator = document.getElementById('refresh-status');
+            if (indicator) {
+                indicator.style.display = 'inline-flex';
+                setTimeout(() => {
+                    indicator.style.display = 'none';
+                }, 3000);
+            }
+        }
+
         setInterval(async () => {
+            lastRefreshTime = Date.now();
+            showRefreshIndicator();
             await loadData();
             refreshCount++;
             if (selectedProject) {
-                await selectProject(selectedProject.id);
+                const detail = projectDetails[selectedProject.id];
+                if (detail) {
+                    renderProjectDetails(detail, selectedProject.id);
+                }
             }
         }, 30000); // Every 30 seconds
 
-        // ========== INIT ==========
+        // ========== INIT (Phase 6) ==========
         document.addEventListener('DOMContentLoaded', () => {
+            // Show initial loading
+            document.getElementById('projects-tbody').innerHTML = 
+                '<tr><td colspan="4" style="text-align: center; padding: 2rem;"><div class="loading-spinner"></div> Loading dashboard...</td></tr>';
+            
+            // Load data
             loadData();
+            
+            // Show empty state initially
+            const panel = document.getElementById('detail-panel');
+            panel.classList.remove('hidden');
         });
     </script>
 </body>
