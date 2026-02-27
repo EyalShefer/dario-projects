@@ -3,9 +3,9 @@
   "name": "Captain Count",
   "description": "High-quality math education game for K-2 grades. 70 mini-games covering grade 1 curriculum. Languages: Portuguese, English, Spanish, Hebrew.",
   "status": "in_progress",
-  "progress_percent": 15,
+  "progress_percent": 17,
   "started_at": "2026-02-26",
-  "updated_at": "2026-02-27T16:00:00Z",
+  "updated_at": "2026-02-28T12:00:00Z",
   "market": "Brazil-first (210M market, high EdTech adoption)",
   "launch_timeline": {
     "soft_launch": "Week 1-2 (organic)",
@@ -64,21 +64,91 @@
     {
       "id": 2,
       "name": "Payment Processing",
-      "status": "pending",
-      "progress_percent": 0,
-      "started_at": null,
+      "status": "in_progress",
+      "progress_percent": 15,
+      "started_at": "2026-02-28T12:00:00Z",
       "completed_at": null,
       "duration_minutes": null,
-      "estimated_hours": 2,
-      "description": "Stripe API integration, webhook handlers, receipt validation, test all payment methods (Card, Boleto, PIX)"
+      "estimated_hours": 3.5,
+      "description": "Firebase Cloud Functions: Stripe API integration, payment intent creation, webhook handlers, receipt validation, test all payment methods (Card, Boleto, PIX)",
+      "note": "Implementation plan created. Awaiting Stripe API keys from Eyal (expected Sun/Mon). Code ready for deployment.",
+      "architecture": {
+        "backend": "Firebase Cloud Functions (5 functions, TypeScript)",
+        "database": "Firestore collections: payments + payment_logs",
+        "payment_methods": ["card", "boleto"],
+        "security": "API keys in CREDENTIALS.md (not in code)"
+      },
+      "subtasks": [
+        {
+          "name": "Setup & Dependencies",
+          "status": "ready",
+          "description": "Initialize Cloud Functions project with TypeScript, package.json, firebase.json, tsconfig.json",
+          "assigned_to": "Dario"
+        },
+        {
+          "name": "Configuration & Utils",
+          "status": "ready",
+          "description": "Types.ts, Stripe config handler, Firestore client, logger utility",
+          "assigned_to": "Dario"
+        },
+        {
+          "name": "Payment Intent & Webhook Handlers",
+          "status": "ready",
+          "description": "createPaymentIntent function, stripeWebhook handler, main index.ts",
+          "assigned_to": "Dario"
+        },
+        {
+          "name": "Testing & Validation",
+          "status": "ready",
+          "description": "Unit tests, manual testing guide, test cards (4242...*, Boleto, failed scenarios)",
+          "assigned_to": "Dario"
+        },
+        {
+          "name": "Stripe API Keys",
+          "status": "pending",
+          "description": "Eyal: Create Stripe account (Brazil), get publishable + secret keys",
+          "assigned_to": "Eyal",
+          "deadline": "2026-03-02"
+        }
+      ],
+      "plan_file": "docs/plans/2026-02-27-task-2-payment-processing.md",
+      "files_to_create": 15,
+      "total_commits": 13
     },
     {
       "id": 3,
       "name": "App Store Setup",
       "status": "pending",
       "progress_percent": 0,
-      "estimated_hours": 1.5,
-      "description": "Google Play & App Store listings, screenshots, description, pricing setup"
+      "estimated_hours": 2.5,
+      "description": "Google Play & App Store listings with localization, screenshots, app description, pricing tiers, category setup",
+      "note": "Requires: Final app APK/build + marketing assets (Task 4). Manual console setup by Eyal.",
+      "subtasks": [
+        {
+          "name": "Google Play Listing",
+          "status": "pending",
+          "description": "App name, description, screenshots (Portuguese + English), category (Education), age rating, pricing tiers (Basic R$9.99, Premium R$19.99, Annual R$99)",
+          "assigned_to": "Eyal"
+        },
+        {
+          "name": "App Store (iOS) Listing",
+          "status": "pending",
+          "description": "Same content + iOS screenshots (6.5\" format), TestFlight setup for soft launch, pricing configuration",
+          "assigned_to": "Eyal"
+        },
+        {
+          "name": "Localization Setup",
+          "status": "pending",
+          "description": "Portuguese (Brazil) + English translations for all store text. Spanish + Hebrew as secondary.",
+          "assigned_to": "Dario"
+        },
+        {
+          "name": "Review & Compliance",
+          "status": "pending",
+          "description": "Google Play content rating, Apple content rating, privacy policy, terms of service",
+          "assigned_to": "Eyal"
+        }
+      ]
     },
     {
       "id": 4,
