@@ -653,11 +653,11 @@
             
             for (const project of projectsData.projects) {
                 try {
-                    const response = await fetch(`./projects/${project.id}/project.json`);
+                    const response = await fetch(`./${project.id}/project.json`);
                     projectDetails[project.id] = await response.json();
                     
                     // Also load task logs if available
-                    const logsResponse = await fetch(`./projects/${project.id}/task-1-logs.json`);
+                    const logsResponse = await fetch(`./${project.id}/task-1-logs.json`);
                     if (logsResponse.ok) {
                         projectDetails[`${project.id}-logs-1`] = await logsResponse.json();
                     }
@@ -714,7 +714,7 @@
                     renderProjectDetails(projectDetail, projectId);
                 } else {
                     // Fallback to fetch if not preloaded
-                    const response = await fetch(`./projects/${projectId}/project.json`);
+                    const response = await fetch(`./${projectId}/project.json`);
                     if (!response.ok) throw new Error('Failed to fetch project.json');
                     const detail = await response.json();
                     renderProjectDetails(detail, projectId);
