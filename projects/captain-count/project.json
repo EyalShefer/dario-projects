@@ -3,9 +3,9 @@
   "name": "Captain Count",
   "description": "High-quality math education game for K-2 grades. 70 mini-games covering grade 1 curriculum. Languages: Portuguese, English, Spanish, Hebrew.",
   "status": "in_progress",
-  "progress_percent": 17,
+  "progress_percent": 19,
   "started_at": "2026-02-26",
-  "updated_at": "2026-02-28T12:00:00Z",
+  "updated_at": "2026-02-28T13:30:00Z",
   "market": "Brazil-first (210M market, high EdTech adoption)",
   "launch_timeline": {
     "soft_launch": "Week 1-2 (organic)",
@@ -118,37 +118,57 @@
     {
       "id": 3,
       "name": "App Store Setup",
-      "status": "pending",
-      "progress_percent": 0,
-      "estimated_hours": 2.5,
-      "description": "Google Play & App Store listings with localization, screenshots, app description, pricing tiers, category setup",
-      "note": "Requires: Final app APK/build + marketing assets (Task 4). Manual console setup by Eyal.",
+      "status": "in_progress",
+      "progress_percent": 15,
+      "started_at": "2026-02-28T12:30:00Z",
+      "completed_at": null,
+      "estimated_hours": 4,
+      "description": "Google Play & App Store listings with full localization (PT-BR, EN, ES, HE), store content, pricing tiers, compliance",
+      "note": "Implementation plan complete. Store content templates created. Awaiting app APK/IPA + graphics assets from Eyal.",
+      "plan_file": "docs/plans/2026-02-28-task-3-app-store-setup.md",
+      "architecture": {
+        "content": "Localized JSON files (descriptions, keywords, short descriptions)",
+        "legal": "Privacy policy + terms of service (COPPA/GDPR/LGPD compliant)",
+        "config": "Store configuration templates (pricing, categories, ratings)",
+        "assets": "Screenshots, graphics, promotional materials directory structure"
+      },
       "subtasks": [
         {
-          "name": "Google Play Listing",
-          "status": "pending",
-          "description": "App name, description, screenshots (Portuguese + English), category (Education), age rating, pricing tiers (Basic R$9.99, Premium R$19.99, Annual R$99)",
-          "assigned_to": "Eyal"
+          "name": "Store Content",
+          "status": "in_progress",
+          "description": "App descriptions (4 languages), short descriptions, keywords, privacy policy, terms of service",
+          "assigned_to": "Dario",
+          "progress": "40% (descriptions done, legal docs pending)"
         },
         {
-          "name": "App Store (iOS) Listing",
+          "name": "Google Play Setup",
           "status": "pending",
-          "description": "Same content + iOS screenshots (6.5\" format), TestFlight setup for soft launch, pricing configuration",
-          "assigned_to": "Eyal"
+          "description": "Dev account ($25), app creation, store listing, screenshots, pricing configuration, content rating",
+          "assigned_to": "Eyal",
+          "estimated_hours": 2
         },
         {
-          "name": "Localization Setup",
+          "name": "App Store Setup",
           "status": "pending",
-          "description": "Portuguese (Brazil) + English translations for all store text. Spanish + Hebrew as secondary.",
+          "description": "Dev account ($99/yr), app creation, store listing, screenshots, in-app purchase setup, TestFlight",
+          "assigned_to": "Eyal",
+          "estimated_hours": 2
+        },
+        {
+          "name": "Asset Organization",
+          "status": "ready",
+          "description": "Screenshot directories, graphics guidelines, naming conventions, asset templates",
           "assigned_to": "Dario"
         },
         {
-          "name": "Review & Compliance",
-          "status": "pending",
-          "description": "Google Play content rating, Apple content rating, privacy policy, terms of service",
-          "assigned_to": "Eyal"
+          "name": "Pre-Submission Checklist",
+          "status": "ready",
+          "description": "Verification checklist, compliance audit, launch readiness verification",
+          "assigned_to": "Both"
         }
-      ]
+      ],
+      "files_created": 3,
+      "files_total": 13
     },
     {
       "id": 4,
