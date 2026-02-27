@@ -609,12 +609,14 @@
 
         function formatDate(dateString) {
             const date = new Date(dateString);
+            // Format in Jerusalem (Asia/Jerusalem) timezone
             return date.toLocaleString('he-IL', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
                 hour: '2-digit',
-                minute: '2-digit'
+                minute: '2-digit',
+                timeZone: 'Asia/Jerusalem'
             });
         }
 
@@ -792,8 +794,8 @@
                                         <div class="stat-value">${task.estimated_hours}h</div>
                                     </div>
                                     <div class="stat">
-                                        <div class="stat-label">Duration</div>
-                                        <div class="stat-value">${task.duration_minutes ? task.duration_minutes + 'm' : '-'}</div>
+                                        <div class="stat-label">Progress</div>
+                                        <div class="stat-value">${task.progress_percent || '-'}%</div>
                                     </div>
                                     ${task.started_at ? `<div class="stat">
                                         <div class="stat-label">Started</div>
@@ -804,6 +806,27 @@
                                         <div class="stat-value">${formatDate(task.completed_at)}</div>
                                     </div>` : ''}
                                 </div>
+                                ${task.subtasks && task.subtasks.length > 0 ? `
+                                <div style="margin: 1rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 6px;">
+                                    <div style="font-weight: 600; color: var(--accent-blue); margin-bottom: 0.8rem; font-size: 0.9rem;">📋 Subtasks</div>
+                                    ${task.subtasks.map(subtask => `
+                                        <div style="margin-bottom: 0.6rem; padding: 0.6rem; background: rgba(59,130,246,0.05); border-left: 3px solid ${subtask.status === 'completed' ? 'var(--status-success)' : subtask.status === 'in_progress' ? 'var(--accent-blue)' : 'var(--status-pending)'}; border-radius: 3px;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                                                <div style="flex: 1;">
+                                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">
+                                                        ${subtask.status === 'completed' ? '✅' : subtask.status === 'in_progress' ? '🔄' : '⏳'}
+                                                        ${subtask.name}
+                                                    </div>
+                                                    ${subtask.description ? `<div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.3rem;">${subtask.description}</div>` : ''}
+                                                </div>
+                                                ${subtask.assigned_to ? `<div style="background: ${subtask.assigned_to === 'Eyal' ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)'}; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; white-space: nowrap;">
+                                                    ${subtask.assigned_to === 'Eyal' ? '🔴 WAITING FOR: Eyal' : '✅ ' + subtask.assigned_to}
+                                                </div>` : ''}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                ` : ''}
                                 <div class="logs-list">
                                     ${logsHtml || '<div class="log-entry"><span class="log-severity info">ℹ️</span><div class="log-message">No logs yet</div></div>'}
                                 </div>
@@ -852,8 +875,7 @@
         // ========== UPDATE LAST UPDATED ==========
         function updateLastUpdated() {
             if (projectsData) {
-                const date = new Date(projectsData.last_updated);
-                document.getElementById('last-updated').textContent = formatDate(date.toISOString());
+                document.getElementById('last-updated').textContent = formatDate(projectsData.last_updated);
             }
         }
 
