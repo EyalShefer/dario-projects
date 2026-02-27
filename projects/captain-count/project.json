@@ -3,9 +3,9 @@
   "name": "Captain Count",
   "description": "High-quality math education game for K-2 grades. 70 mini-games covering grade 1 curriculum. Languages: Portuguese, English, Spanish, Hebrew.",
   "status": "in_progress",
-  "progress_percent": 19,
+  "progress_percent": 24,
   "started_at": "2026-02-26",
-  "updated_at": "2026-02-28T13:30:00Z",
+  "updated_at": "2026-02-28T14:00:00Z",
   "market": "Brazil-first (210M market, high EdTech adoption)",
   "launch_timeline": {
     "soft_launch": "Week 1-2 (organic)",
@@ -119,12 +119,12 @@
       "id": 3,
       "name": "App Store Setup",
       "status": "in_progress",
-      "progress_percent": 15,
+      "progress_percent": 60,
       "started_at": "2026-02-28T12:30:00Z",
       "completed_at": null,
       "estimated_hours": 4,
       "description": "Google Play & App Store listings with full localization (PT-BR, EN, ES, HE), store content, pricing tiers, compliance",
-      "note": "Implementation plan complete. Store content templates created. Awaiting app APK/IPA + graphics assets from Eyal.",
+      "note": "✅ 5 comprehensive guides created (68 KB, 58 pages). ⏳ Awaiting app APK/IPA + screenshots from Eyal for manual console setup.",
       "plan_file": "docs/plans/2026-02-28-task-3-app-store-setup.md",
       "architecture": {
         "content": "Localized JSON files (descriptions, keywords, short descriptions)",
@@ -135,39 +135,59 @@
       "subtasks": [
         {
           "name": "Store Content",
-          "status": "in_progress",
-          "description": "App descriptions (4 languages), short descriptions, keywords, privacy policy, terms of service",
+          "status": "completed",
+          "description": "App descriptions (4 languages: PT-BR, EN, ES, HE), configuration files",
           "assigned_to": "Dario",
-          "progress": "40% (descriptions done, legal docs pending)"
+          "completed_at": "2026-02-28T13:30:00Z"
         },
         {
-          "name": "Google Play Setup",
+          "name": "Google Play Setup Guide",
+          "status": "completed",
+          "description": "Complete 26-step guide with screenshots, pricing, APK upload, review process",
+          "assigned_to": "Dario",
+          "file": "docs/GOOGLE_PLAY_SETUP.md",
+          "completed_at": "2026-02-28T13:45:00Z"
+        },
+        {
+          "name": "App Store Setup Guide",
+          "status": "completed",
+          "description": "Complete 27-step guide with TestFlight, IPA upload, IAP configuration, review process",
+          "assigned_to": "Dario",
+          "file": "docs/APP_STORE_SETUP.md",
+          "completed_at": "2026-02-28T13:50:00Z"
+        },
+        {
+          "name": "Store Setup Index & Checklist",
+          "status": "completed",
+          "description": "Navigation guide (STORE_SETUP_INDEX.md), summary (STORE_SETUP_SUMMARY.md), pre-submission checklist",
+          "assigned_to": "Dario",
+          "files": ["docs/STORE_SETUP_INDEX.md", "docs/STORE_SETUP_SUMMARY.md", "docs/STORE_SUBMISSION_CHECKLIST.md"],
+          "completed_at": "2026-02-28T13:55:00Z"
+        },
+        {
+          "name": "Manual Store Listing Setup (Google Play)",
           "status": "pending",
-          "description": "Dev account ($25), app creation, store listing, screenshots, pricing configuration, content rating",
+          "description": "Eyal: Create Google Play account ($25), follow GOOGLE_PLAY_SETUP.md, upload APK, submit for review",
           "assigned_to": "Eyal",
-          "estimated_hours": 2
+          "estimated_hours": 2.5,
+          "blocking": "Awaiting app APK + screenshots"
         },
         {
-          "name": "App Store Setup",
+          "name": "Manual Store Listing Setup (App Store)",
           "status": "pending",
-          "description": "Dev account ($99/yr), app creation, store listing, screenshots, in-app purchase setup, TestFlight",
+          "description": "Eyal: Create App Store account ($99/yr), follow APP_STORE_SETUP.md, build+upload IPA, submit for review",
           "assigned_to": "Eyal",
-          "estimated_hours": 2
-        },
-        {
-          "name": "Asset Organization",
-          "status": "ready",
-          "description": "Screenshot directories, graphics guidelines, naming conventions, asset templates",
-          "assigned_to": "Dario"
-        },
-        {
-          "name": "Pre-Submission Checklist",
-          "status": "ready",
-          "description": "Verification checklist, compliance audit, launch readiness verification",
-          "assigned_to": "Both"
+          "estimated_hours": 2.5,
+          "blocking": "Awaiting app IPA + screenshots"
         }
       ],
-      "files_created": 3,
+      "deliverables": {
+        "guides": 5,
+        "content_files": 1,
+        "config_files": 2,
+        "total_documents": "68 KB, 58 pages"
+      },
+      "files_created": 10,
       "files_total": 13
     },
     {
