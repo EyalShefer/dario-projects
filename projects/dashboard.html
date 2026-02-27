@@ -628,7 +628,9 @@
                 // Show loading state
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem;"><div class="loading-spinner"></div> Loading projects...</td></tr>';
                 
-                const response = await fetch('./index.json');
+                // Add cache busting parameter (timestamp) to ensure fresh data
+                const timestamp = new Date().getTime();
+                const response = await fetch(`./index.json?t=${timestamp}`);
                 if (!response.ok) throw new Error('Failed to fetch index.json');
                 
                 projectsData = await response.json();
@@ -653,13 +655,15 @@
         async function preloadAllProjectDetails() {
             if (!projectsData) return;
             
+            const timestamp = new Date().getTime();
+            
             for (const project of projectsData.projects) {
                 try {
-                    const response = await fetch(`./${project.id}/project.json`);
+                    const response = await fetch(`./${project.id}/project.json?t=${timestamp}`);
                     projectDetails[project.id] = await response.json();
                     
                     // Also load task logs if available
-                    const logsResponse = await fetch(`./${project.id}/task-1-logs.json`);
+                    const logsResponse = await fetch(`./${project.id}/task-1-logs.json?t=${timestamp}`);
                     if (logsResponse.ok) {
                         projectDetails[`${project.id}-logs-1`] = await logsResponse.json();
                     }
@@ -716,7 +720,8 @@
                     renderProjectDetails(projectDetail, projectId);
                 } else {
                     // Fallback to fetch if not preloaded
-                    const response = await fetch(`./${projectId}/project.json`);
+                    const timestamp = new Date().getTime();
+                    const response = await fetch(`./${projectId}/project.json?t=${timestamp}`);
                     if (!response.ok) throw new Error('Failed to fetch project.json');
                     const detail = await response.json();
                     renderProjectDetails(detail, projectId);
