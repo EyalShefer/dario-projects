@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דריו — Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0f1419;
+            --bg-card: #1a1f2e;
+            --border-color: #2a3142;
+            --text-primary: #e0e0e0;
+            --text-secondary: #9ca3af;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --status-success: #10b981;
+            --status-warning: #f59e0b;
+            --status-error: #ef4444;
+            --status-pending: #6b7280;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--status-success);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ========== MAIN LAYOUT ========== */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* ========== PROJECTS TABLE ========== */
+        .projects-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .projects-table {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .projects-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .projects-table thead {
+            background: rgba(59, 130, 246, 0.1);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .projects-table th {
+            padding: 1rem;
+            text-align: right;
+            font-weight: 600;
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .projects-table tbody tr {
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+
+        .projects-table tbody tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .projects-table tbody tr.active {
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .projects-table td {
+            padding: 1.2rem 1rem;
+            text-align: right;
+        }
+
+        .project-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.in_progress {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .status-badge.completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--status-success);
+        }
+
+        .status-badge.pending {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--status-pending);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .updated-at {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========== DETAIL PANEL ========== */
+        .detail-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .detail-panel.hidden {
+            display: none;
+        }
+
+        .panel-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .panel-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .panel-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .meta-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .meta-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* ========== TASKS LIST ========== */
+        .tasks-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .tasks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .task-card {
+            background: rgba(26, 31, 46, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .task-card.expanded {
+            border-color: var(--accent-blue);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .task-name {
+            font-weight: 600;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .task-status {
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .task-body {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .task-body.show {
+            display: block;
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        .task-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .logs-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-time {
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .log-message {
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+
+        .log-severity {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .log-severity.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--status-success);
+        }
+
+        .log-severity.info {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .log-severity.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--status-warning);
+        }
+
+        /* ========== EMPTY STATE ========== */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            text-align: center;
+            max-width: 300px;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .refresh-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .refresh-indicator .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--status-success);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-card);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🤖 דריו</h1>
+        <p>Master Project Dashboard</p>
+        <div class="header-meta">
+            <div class="status-indicator">
+                <span class="dot"></span>
+                <span>Live</span>
+            </div>
+            <div>Last Updated: <span id="last-updated">Loading...</span></div>
+            <div id="refresh-status" class="refresh-indicator" style="display: none;">
+                <span class="dot"></span>
+                <span>Auto-refreshing</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- PROJECTS TABLE -->
+        <div class="projects-section">
+            <h2 class="section-title">📊 Projects</h2>
+            <div class="projects-table">
+                <table id="projects-table-element">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                            <th>Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-tbody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- DETAIL PANEL -->
+        <div class="detail-panel hidden" id="detail-panel">
+            <div class="empty-state">
+                <div class="empty-state-icon">👈</div>
+                <p>Select a project to view details, tasks, and logs</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            דריו Autonomous System | 
+            <span class="refresh-indicator">
+                <span class="dot"></span>
+                Auto-refresh: 30s
+            </span>
+        </p>
+    </footer>
+
+    <script>
+        // ========== GLOBAL STATE ==========
+        let projectsData = null;
+        let selectedProject = null;
+
+        // ========== UTILITIES ==========
+        function timeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            return `${diffDays}d ago`;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('he-IL', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // ========== LOAD DATA ==========
+        async function loadData() {
+            try {
+                const response = await fetch('./index.json');
+                projectsData = await response.json();
+                renderProjects();
+                updateLastUpdated();
+            } catch (error) {
+                console.error('Failed to load data:', error);
+            }
+        }
+
+        // ========== RENDER PROJECTS TABLE ==========
+        function renderProjects() {
+            if (!projectsData) return;
+
+            const tbody = document.getElementById('projects-tbody');
+            tbody.innerHTML = '';
+
+            projectsData.projects.forEach(project => {
+                const row = document.createElement('tr');
+                row.className = selectedProject?.id === project.id ? 'active' : '';
+                row.innerHTML = `
+                    <td class="project-name">${project.name}</td>
+                    <td>
+                        <span class="status-badge ${project.status}">
+                            ${project.status === 'in_progress' ? 'In Progress' : project.status}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${project.progress_percent}%"></div>
+                        </div>
+                        <div class="progress-text">${project.progress_percent}%</div>
+                    </td>
+                    <td class="updated-at">${timeAgo(project.updated_at)}</td>
+                `;
+                row.onclick = () => selectProject(project.id);
+                tbody.appendChild(row);
+            });
+        }
+
+        // ========== SELECT PROJECT ==========
+        async function selectProject(projectId) {
+            selectedProject = projectsData.projects.find(p => p.id === projectId);
+            if (!selectedProject) return;
+
+            // Load project details
+            try {
+                const response = await fetch(`./${projectId}/project.json`);
+                const projectDetails = await response.json();
+                renderProjectDetails(projectDetails);
+                renderProjects(); // Update table styling
+            } catch (error) {
+                console.error('Failed to load project details:', error);
+            }
+        }
+
+        // ========== RENDER PROJECT DETAILS ==========
+        function renderProjectDetails(project) {
+            const panel = document.getElementById('detail-panel');
+            
+            let html = `
+                <div class="panel-header">
+                    <div class="panel-title">${project.name}</div>
+                    <div class="panel-description">${project.description}</div>
+                    <div class="panel-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Status</div>
+                            <div class="meta-value">
+                                <span class="status-badge ${project.status}">${project.status}</span>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Progress</div>
+                            <div class="meta-value">${project.progress_percent}%</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Started</div>
+                            <div class="meta-value">${project.started_at}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Updated</div>
+                            <div class="meta-value">${formatDate(project.updated_at)}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tasks-section">
+                    <h3>📋 Tasks (${project.tasks_completed || 0}/${project.tasks_total || project.tasks?.length || 0})</h3>
+                    <div class="tasks-list">
+            `;
+
+            if (project.tasks && project.tasks.length > 0) {
+                project.tasks.forEach((task, index) => {
+                    const statusClass = task.status === 'completed' ? 'status-success' : 
+                                       task.status === 'in_progress' ? 'accent-blue' : 'status-pending';
+                    
+                    html += `
+                        <div class="task-card" onclick="toggleTaskDetails(this)">
+                            <div class="task-header">
+                                <div>
+                                    <div class="task-name">Task ${task.id}: ${task.name}</div>
+                                    <div class="task-description">${task.description || ''}</div>
+                                </div>
+                                <div class="task-status">
+                                    <span class="status-badge ${task.status}">
+                                        ${task.status === 'completed' ? '✓' : task.status === 'in_progress' ? '⟳' : '○'}
+                                        ${task.status}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="task-body">
+                                <div class="task-stats">
+                                    <div class="stat">
+                                        <div class="stat-label">Estimated</div>
+                                        <div class="stat-value">${task.estimated_hours}h</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-label">Duration</div>
+                                        <div class="stat-value">${task.duration_minutes ? task.duration_minutes + 'm' : '-'}</div>
+                                    </div>
+                                </div>
+                                <div class="logs-list" id="logs-${index}">
+                                    ${task.status === 'completed' ? '<div class="log-entry"><span class="log-severity success">SUCCESS</span><div class="log-message">Task completed</div></div>' : '<div class="log-entry"><span class="log-severity info">PENDING</span><div class="log-message">Awaiting execution</div></div>'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            html += `
+                    </div>
+                </div>
+            `;
+
+            panel.innerHTML = html;
+            panel.classList.remove('hidden');
+        }
+
+        // ========== TOGGLE TASK DETAILS ==========
+        function toggleTaskDetails(element) {
+            const body = element.querySelector('.task-body');
+            body.classList.toggle('show');
+            element.classList.toggle('expanded');
+        }
+
+        // ========== UPDATE LAST UPDATED ==========
+        function updateLastUpdated() {
+            if (projectsData) {
+                const date = new Date(projectsData.last_updated);
+                document.getElementById('last-updated').textContent = formatDate(date.toISOString());
+            }
+        }
+
+        // ========== AUTO-REFRESH ==========
+        setInterval(() => {
+            loadData();
+        }, 30000); // Every 30 seconds
+
+        // ========== INIT ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+        });
+    </script>
+</body>
+</html>

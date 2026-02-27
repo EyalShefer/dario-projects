@@ -1,0 +1,96 @@
+{
+  "id": "captain-count",
+  "name": "Captain Count",
+  "description": "High-quality math education game for K-2 grades. 70 mini-games covering grade 1 curriculum. Languages: Portuguese, English, Spanish, Hebrew.",
+  "status": "in_progress",
+  "progress_percent": 12,
+  "started_at": "2026-02-26",
+  "updated_at": "2026-02-27T22:50:00Z",
+  "market": "Brazil-first (210M market, high EdTech adoption)",
+  "launch_timeline": {
+    "soft_launch": "Week 1-2 (organic)",
+    "paid_ads": "Week 3-4"
+  },
+  "monetization": {
+    "model": "Tiered freemium + IAP + Ads",
+    "tiers": [
+      { "name": "Free", "price": 0 },
+      { "name": "Basic", "price": "R$9.99" },
+      { "name": "Premium", "price": "R$19.99" },
+      { "name": "Annual", "price": "R$99" }
+    ],
+    "target_arpu": "R$3-5/month (~$0.60-1.00 USD)"
+  },
+  "tasks": [
+    {
+      "id": 1,
+      "name": "Analytics & Tracking Setup",
+      "status": "completed",
+      "progress_percent": 100,
+      "started_at": "2026-02-26T22:20:00Z",
+      "completed_at": "2026-02-26T22:50:00Z",
+      "duration_minutes": 30,
+      "estimated_hours": 0.5,
+      "description": "Firebase, GA4, Mixpanel setup + payment tracking schema + Stripe integration"
+    },
+    {
+      "id": 2,
+      "name": "Payment Processing",
+      "status": "pending",
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "duration_minutes": null,
+      "estimated_hours": 2,
+      "description": "Stripe API integration, webhook handlers, receipt validation, test all payment methods (Card, Boleto, PIX)"
+    },
+    {
+      "id": 3,
+      "name": "App Store Setup",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 1.5,
+      "description": "Google Play & App Store listings, screenshots, description, pricing setup"
+    },
+    {
+      "id": 4,
+      "name": "Marketing Assets",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 2,
+      "description": "App icon, promo images, social media templates, landing page"
+    },
+    {
+      "id": 5,
+      "name": "Soft Launch (Organic)",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 2,
+      "description": "Deploy to Google Play (organic), monitor downloads & crashes, gather feedback"
+    },
+    {
+      "id": 6,
+      "name": "Monitoring & Analytics",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 2,
+      "description": "Real-time dashboard, daily reporting, user behavior analysis, retention tracking"
+    },
+    {
+      "id": 7,
+      "name": "Paid Ads Campaign",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 2,
+      "description": "Facebook/Google Ads setup, targeting, daily monitoring, ROI optimization"
+    },
+    {
+      "id": 8,
+      "name": "Scale & Optimization",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 3,
+      "description": "Performance optimization, feature rollout, user retention improvements, revenue scaling"
+    }
+  ]
+}

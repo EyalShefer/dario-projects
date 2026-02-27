@@ -1,0 +1,43 @@
+{
+  "system": "דריו",
+  "system_id": "dario",
+  "last_updated": "2026-02-27T11:30:00Z",
+  "projects": [
+    {
+      "id": "captain-count",
+      "name": "Captain Count",
+      "description": "Math education game for K-2 (Brazil-first)",
+      "status": "in_progress",
+      "progress_percent": 12,
+      "started_at": "2026-02-26",
+      "updated_at": "2026-02-27T22:50:00Z",
+      "tasks_completed": 1,
+      "tasks_total": 8,
+      "artifacts": []
+    },
+    {
+      "id": "wizdi-ai-studio",
+      "name": "Wizdi AI Studio",
+      "description": "AI LMS tool with lesson creation & student/teacher modes",
+      "status": "in_progress",
+      "progress_percent": 30,
+      "started_at": "2026-02-25",
+      "updated_at": "2026-02-27T08:00:00Z",
+      "tasks_completed": 0,
+      "tasks_total": 0,
+      "artifacts": []
+    },
+    {
+      "id": "dario-system",
+      "name": "Dario System (Autonomous)",
+      "description": "Memory structure, cron sync, autonomous task execution",
+      "status": "in_progress",
+      "progress_percent": 40,
+      "started_at": "2026-02-25",
+      "updated_at": "2026-02-27T11:30:00Z",
+      "tasks_completed": 0,
+      "tasks_total": 0,
+      "artifacts": []
+    }
+  ]
+}
