@@ -1,16 +1,23 @@
 {
   "id": "wizdi-ai-studio",
   "name": "Wizdi AI Studio",
-  "description": "AI-powered Learning Management System (LMS) with lesson creation, quizzes, student/teacher modes, and intelligent dashboard.",
+  "description": "AI-powered Learning Management System (LMS) with lesson creation, quizzes, student/teacher modes, intelligent dashboard, and tester feedback loop system.",
   "status": "in_progress",
-  "progress_percent": 30,
+  "progress_percent": 35,
   "started_at": "2026-02-25",
-  "updated_at": "2026-02-27T08:00:00Z",
+  "updated_at": "2026-02-28T23:01:00Z",
   "stakeholder": "Adva Gavai (Pedagogical Consultant)",
+  "repository": "EyalShefer/ai-lms-system (Private)",
+  "deployment": {
+    "production": "ai-lms-pro.web.app (Firebase Hosting)",
+    "staging": "Feature branches deployed to staging Vercel URLs",
+    "firebase_project": "ai-lms-pro (Blaze plan, eur3 region)"
+  },
   "strengths": [
     "AI-powered question generation",
     "Intuitive dashboard",
-    "Teacher-friendly interface"
+    "Teacher-friendly interface",
+    "Comprehensive analytics & QA infrastructure"
   ],
   "issues": [
     "UX text labels inconsistent",
@@ -20,32 +27,207 @@
   ],
   "implementation": {
     "tool": "AntiGravity IDE with Claude Code plugin",
-    "phase": "Bug fixes + UX refinement"
+    "phase": "Bug fixes + UX refinement + Feedback loop system",
+    "tech_stack": "React 18 + TypeScript 5 + Vite + Tailwind CSS + Firebase (202 Cloud Functions)"
   },
   "tasks": [
     {
       "id": 1,
       "name": "UX Text Labels & Navigation",
       "status": "pending",
-      "description": "Standardize UI text, improve menu navigation clarity"
+      "progress_percent": 0,
+      "estimated_hours": 3,
+      "description": "Standardize UI text, improve menu navigation clarity, fix inconsistent labels across lesson builder, quiz engine, dashboard"
     },
     {
       "id": 2,
       "name": "File Upload System",
       "status": "pending",
-      "description": "Fix timeout issues, implement proper size validation, add progress indicators"
+      "progress_percent": 0,
+      "estimated_hours": 4,
+      "description": "Fix timeout issues, implement proper size validation, add progress indicators, handle error scenarios gracefully"
     },
     {
       "id": 3,
       "name": "Image Handling",
       "status": "pending",
-      "description": "Fix aspect ratios, add loading states, optimize for different screen sizes"
+      "progress_percent": 0,
+      "estimated_hours": 3,
+      "description": "Fix aspect ratios, add loading states, optimize for different screen sizes, improve lazy loading"
     },
     {
       "id": 4,
       "name": "Dashboard Analytics",
       "status": "pending",
-      "description": "Student progress tracking, teacher performance insights"
+      "progress_percent": 0,
+      "estimated_hours": 4,
+      "description": "Student progress tracking, teacher performance insights, pedagogical audit integration"
+    },
+    {
+      "id": 5,
+      "name": "Feedback Loop System - Chat Widget",
+      "status": "in_progress",
+      "progress_percent": 5,
+      "started_at": "2026-02-28T20:00:00Z",
+      "estimated_hours": 2,
+      "description": "React chat widget component embedded in app (staging + production). Allows Adva & testers to report issues without knowing code.",
+      "note": "Design completed & approved. Implementation planning in progress. Claude Code starting Task 1.",
+      "architecture": {
+        "component": "src/components/FeedbackChat/index.tsx",
+        "styling": "Tailwind CSS + dark mode support",
+        "storage": "Firestore collection: feedback_sessions",
+        "features": "User ID detection, message history, real-time sync"
+      },
+      "subtasks": [
+        {
+          "name": "Chat Widget UI & Layout",
+          "status": "in_progress",
+          "description": "React component with Tailwind styling, message display, input form, toggle button",
+          "assigned_to": "Claude Code (Subagent)",
+          "estimated_hours": 1
+        },
+        {
+          "name": "Firestore Integration",
+          "status": "pending",
+          "description": "Connect widget to Firestore, create feedback_sessions collection, real-time sync",
+          "assigned_to": "Claude Code (Subagent)",
+          "estimated_hours": 1
+        }
+      ],
+      "plan_file": "docs/plans/2026-02-28-wizdi-feedback-loop-implementation.md"
+    },
+    {
+      "id": 6,
+      "name": "Feedback Loop System - Agent Polling & Processing",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 4,
+      "description": "Cron agent (polling every 5-10 minutes) reads feedback messages, analyzes them, asks clarifying questions, understands code issues.",
+      "note": "Design completed. Implementation ready. Awaiting Task 5 completion.",
+      "architecture": {
+        "service": "backend/agent/feedbackLoopAgent.ts",
+        "trigger": "Cloud Scheduler (5-minute interval) or manual HTTP endpoint",
+        "processing": "Message analysis, clarification logic, GitHub code reading prep",
+        "database": "Firestore feedback_sessions collection"
+      },
+      "subtasks": [
+        {
+          "name": "Agent Polling Service",
+          "status": "pending",
+          "description": "Create polling loop that fetches unprocessed messages from Firestore",
+          "estimated_hours": 1.5
+        },
+        {
+          "name": "Message Analysis & Classification",
+          "status": "pending",
+          "description": "Analyze feedback, classify issues, determine if clarification needed",
+          "estimated_hours": 1
+        },
+        {
+          "name": "Clarification Q&A",
+          "status": "pending",
+          "description": "Post clarifying questions back to chat, await Adva's response",
+          "estimated_hours": 1
+        },
+        {
+          "name": "GitHub Integration Prep",
+          "status": "pending",
+          "description": "Prepare for code reading (Task 7)",
+          "estimated_hours": 0.5
+        }
+      ],
+      "plan_file": "docs/plans/2026-02-28-wizdi-feedback-loop-implementation.md"
+    },
+    {
+      "id": 7,
+      "name": "Feedback Loop System - GitHub & Staging Deploy",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 3,
+      "description": "Agent reads GitHub code, identifies affected files, makes surgical fixes, commits to feature branch, deploys to Vercel staging.",
+      "note": "Design completed. Implementation ready. Awaiting Task 6 completion.",
+      "architecture": {
+        "github": "GitHub API integration, feature branch creation, commit & push",
+        "ci_cd": "GitHub Actions runs automatically (TS check, ESLint, Jest, build)",
+        "deployment": "Vercel auto-deploys feature branches to staging URLs",
+        "notification": "Agent posts staging URL to chat"
+      },
+      "subtasks": [
+        {
+          "name": "GitHub API Integration",
+          "status": "pending",
+          "description": "Read file content, search codebase, create branches, commit changes",
+          "estimated_hours": 1.5
+        },
+        {
+          "name": "Code Fix Generation",
+          "status": "pending",
+          "description": "Analyze issue, identify fix location, generate minimal surgical changes",
+          "estimated_hours": 1
+        },
+        {
+          "name": "CI/CD Integration & Staging Deploy",
+          "status": "pending",
+          "description": "Wait for GitHub Actions to pass, confirm Vercel deploy, get staging URL",
+          "estimated_hours": 0.5
+        }
+      ],
+      "plan_file": "docs/plans/2026-02-28-wizdi-feedback-loop-implementation.md"
+    },
+    {
+      "id": 8,
+      "name": "Feedback Loop System - Approval & Production",
+      "status": "pending",
+      "progress_percent": 0,
+      "estimated_hours": 2,
+      "description": "Adva tests fix on staging, approves, agent merges to main → production deploy. Eyal notified via Telegram.",
+      "note": "Design completed. Implementation ready. Awaiting Task 7 completion.",
+      "architecture": {
+        "testing_cycle": "Adva tests on staging, reports in chat (approve/reject/new issue)",
+        "approval": "Iterative loop until Adva approves",
+        "merge": "Merge feature branch → main via GitHub API",
+        "production": "Vercel auto-deploys main → production",
+        "notification": "Telegram alert to Eyal when complete"
+      },
+      "subtasks": [
+        {
+          "name": "Approval Loop Handler",
+          "status": "pending",
+          "description": "Wait for Adva test feedback, iterate if needed, merge when approved",
+          "estimated_hours": 0.75
+        },
+        {
+          "name": "Telegram Notifications",
+          "status": "pending",
+          "description": "Notify Eyal when fix is live, include issue details & branch",
+          "estimated_hours": 0.5
+        },
+        {
+          "name": "Error Handling & Recovery",
+          "status": "pending",
+          "description": "Handle CI/CD failures, escalation to Eyal for strategic decisions",
+          "estimated_hours": 0.75
+        }
+      ],
+      "plan_file": "docs/plans/2026-02-28-wizdi-feedback-loop-implementation.md"
     }
+  ],
+  "summary": {
+    "total_tasks": 8,
+    "tasks_completed": 0,
+    "tasks_in_progress": 1,
+    "tasks_pending": 7,
+    "total_estimated_hours": "35-40 hours",
+    "feedback_loop_hours": "11-12 hours (Tasks 5-8)",
+    "bug_fixes_hours": "14-16 hours (Tasks 1-4)"
+  },
+  "design_docs": {
+    "feedback_loop_system": "docs/plans/2026-02-28-wizdi-feedback-loop-system-design.md",
+    "implementation_plan": "docs/plans/2026-02-28-wizdi-feedback-loop-implementation.md"
+  },
+  "next_steps": [
+    "Task 1 (Chat Widget): In progress via Claude Code",
+    "Task 2 (Firestore): Ready to start after Task 1",
+    "Tasks 3-8: Queued, awaiting completion of previous tasks"
   ]
 }
