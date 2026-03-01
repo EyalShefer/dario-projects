@@ -1,0 +1,61 @@
+{
+  "exam": {
+    "upload": {
+      "title": "Reference Exam Upload",
+      "description": "Upload an existing exam (from teacher guide or Ministry of Education) and the system will extract its DNA - structure, question types, difficulty levels.\nLater, the system will use this DNA as a template to create new exams.",
+      "selectPdfFile": "Exam PDF File",
+      "selectedFile": "Selected",
+      "fileSizeMB": "MB",
+      "selectSubject": "Subject",
+      "selectGrade": "Grade",
+      "gradePrefix": "Grade",
+      "selectExamType": "Exam Type",
+      "source": "Source (Optional)",
+      "sourcePlaceholder": "Teacher guide, Ministry of Education...",
+      "year": "Year (Optional)",
+      "yearPlaceholder": "2024",
+      "uploadButton": "Upload and Extract DNA",
+      "processing": "Processing...",
+      "selectTextbook": "Select textbook",
+      "selectChapters": "Select chapters",
+      "chapterPrefix": "Chapter",
+      "selectedChapters": "Selected: Chapters",
+      "fileSizeError": "File size must be less than 50MB. Your file size:",
+      "error": {
+        "selectPdfOnly": "Please select a PDF file only",
+        "selectFile": "Please select a file",
+        "selectTextbook": "Please select a textbook",
+        "selectChapters": "Please select at least one chapter",
+        "uploadFailed": "Upload failed",
+        "networkRetry": "Network error. Please wait a moment and try again, or click \"Retry\".\n(Attempt"
+      },
+      "progress": {
+        "uploadingFile": "Uploading file...",
+        "extractingDna": "Extracting DNA from exam..."
+      }
+    },
+    "subject": {
+      "label": "Subject",
+      "math": "Mathematics",
+      "hebrew": "Hebrew",
+      "english": "English",
+      "science": "Science",
+      "history": "History",
+      "other": "Other"
+    },
+    "examTypes": {
+      "unitExam": "Unit Exam / Chapter Summary",
+      "midterm": "Midterm Exam",
+      "final": "Final Exam",
+      "quiz": "Quick Quiz"
+    },
+    "accessibility": {
+      "selectFile": "Select an exam PDF file",
+      "fileHelp": "PDF file up to 50MB",
+      "selectSubject": "Select subject",
+      "subjectHelp": "Choose the exam subject",
+      "selectGrade": "Select grade",
+      "gradeHelp": "Choose the grade level"
+    }
+  }
+}
