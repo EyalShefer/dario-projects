@@ -36,11 +36,34 @@ http://localhost:8080/projects/dashboard.html
 
 ---
 
+## Internationalization (i18n)
+
+This project supports **Hebrew** (default) and **English** with a lightweight translation system.
+
+**To build in different languages:**
+
+```bash
+# Hebrew (default)
+npm run build
+
+# English
+REACT_APP_LANGUAGE=en npm run build
+```
+
+**To add new translations:**
+1. Add keys to `src/locales/he.json`
+2. Add keys to `src/locales/en.json`
+3. Use in component: `const { t } = useTranslation(); t('key.path')`
+
+**Documentation:** See [docs/I18N.md](docs/I18N.md) for complete i18n guide.
+
+---
+
 ## GitHub
 
 - **Repository:** https://github.com/eyalshefer/dario-projects
 - **Branch:** master
-- **Last Updated:** 2026-02-27
+- **Last Updated:** 2026-03-01
 
 ---
 
