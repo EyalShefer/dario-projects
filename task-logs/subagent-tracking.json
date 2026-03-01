@@ -1,0 +1,375 @@
+{
+  "project": "Captain Count Global Launch",
+  "status": "design_approved_ready_for_execution",
+  "created": "2026-02-26T20:30:00Z",
+  "last_updated": "2026-02-26T20:30:00Z",
+  "summary": {
+    "total_tasks": 8,
+    "completed": 0,
+    "in_progress": 0,
+    "pending": 8,
+    "blocked": 0,
+    "total_estimated_hours": 45,
+    "total_estimated_cost_usd": 550,
+    "total_actual_hours": 0,
+    "total_actual_cost_usd": 0
+  },
+  "tasks": [
+    {
+      "task_id": 1,
+      "name": "Analytics & Tracking Setup",
+      "status": "pending",
+      "assigned_to": "subagent_1",
+      "estimated_hours": 5,
+      "estimated_cost_usd": 3,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Firebase, GA4, Mixpanel setup",
+      "subtasks": [
+        {
+          "name": "Firebase project creation",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "GA4 event configuration",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Mixpanel integration",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Payment tracking setup",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    },
+    {
+      "task_id": 2,
+      "name": "Payment Processing Setup",
+      "status": "pending",
+      "assigned_to": "subagent_2",
+      "estimated_hours": 4,
+      "estimated_cost_usd": 2,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Stripe account + Brazil payment methods",
+      "subtasks": [
+        {
+          "name": "Stripe account setup",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Payment tier configuration",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Webhook endpoints",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Payment flow testing",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    },
+    {
+      "task_id": 3,
+      "name": "App Store Listing Preparation",
+      "status": "pending",
+      "assigned_to": "subagent_3",
+      "estimated_hours": 4,
+      "estimated_cost_usd": 0,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Google Play metadata, screenshots, keywords",
+      "subtasks": [
+        {
+          "name": "Portuguese description writing",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Keywords & ASO optimization",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Screenshot design",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Icon & branding assets",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    },
+    {
+      "task_id": 4,
+      "name": "Marketing Assets Creation",
+      "status": "pending",
+      "assigned_to": "subagent_4",
+      "estimated_hours": 5,
+      "estimated_cost_usd": 0,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Social media assets, landing page, PR",
+      "subtasks": [
+        {
+          "name": "Social media image design",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Landing page creation",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Press release writing",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Email templates",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    },
+    {
+      "task_id": 5,
+      "name": "Google Play Soft Launch",
+      "status": "pending",
+      "assigned_to": "subagent_5",
+      "estimated_hours": 3,
+      "estimated_cost_usd": 25,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Launch app on Google Play (organic only, no ads)",
+      "subtasks": [
+        {
+          "name": "Google Play Console setup",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "App build upload",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Store listing completion",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "App review & approval",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    },
+    {
+      "task_id": 6,
+      "name": "Soft Launch Monitoring",
+      "status": "pending",
+      "assigned_to": "monitoring_team",
+      "estimated_hours": 14,
+      "estimated_cost_usd": 0,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Monitor metrics daily, address issues (Days 1-7)",
+      "subtasks": [
+        {
+          "name": "Day 1 metrics review",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Daily monitoring (Days 2-7)",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Crash fixes (if needed)",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Week 1 report compilation",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    },
+    {
+      "task_id": 7,
+      "name": "Facebook Ads Setup",
+      "status": "pending",
+      "assigned_to": "subagent_7",
+      "estimated_hours": 4,
+      "estimated_cost_usd": 500,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Facebook Ads campaign setup (Weeks 3-4)",
+      "subtasks": [
+        {
+          "name": "Facebook Ad Account setup",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Audience targeting definition",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Ad creative design",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Campaign launch & monitoring",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    },
+    {
+      "task_id": 8,
+      "name": "Daily Reporting & Metrics",
+      "status": "pending",
+      "assigned_to": "subagent_8",
+      "estimated_hours": 3,
+      "estimated_cost_usd": 0,
+      "actual_hours": 0,
+      "actual_cost_usd": 0,
+      "progress_percent": 0,
+      "started_at": null,
+      "completed_at": null,
+      "description": "Create metrics templates and logging automation",
+      "subtasks": [
+        {
+          "name": "Metrics dashboard creation",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Daily report template",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Logging automation",
+          "status": "pending",
+          "completed": false
+        },
+        {
+          "name": "Weekly summary setup",
+          "status": "pending",
+          "completed": false
+        }
+      ],
+      "notes": [],
+      "output_files": []
+    }
+  ],
+  "milestones": [
+    {
+      "name": "Pre-Launch (Week 1)",
+      "target_date": "2026-02-26",
+      "status": "in_progress",
+      "tasks_included": [1, 2, 3, 4],
+      "blockers": []
+    },
+    {
+      "name": "Soft Launch (Weeks 1-2)",
+      "target_date": "2026-03-12",
+      "status": "pending",
+      "tasks_included": [5, 6],
+      "blockers": []
+    },
+    {
+      "name": "Scale Phase (Weeks 3-4)",
+      "target_date": "2026-03-26",
+      "status": "pending",
+      "tasks_included": [7, 8],
+      "blockers": []
+    }
+  ],
+  "risks": [
+    {
+      "id": 1,
+      "title": "High CAC in Brazil",
+      "severity": "medium",
+      "status": "open",
+      "mitigation": "Start organic, iterate pricing before scaling ads"
+    },
+    {
+      "id": 2,
+      "title": "Low retention (D7 < 20%)",
+      "severity": "high",
+      "status": "open",
+      "mitigation": "A/B test onboarding and difficulty curves"
+    },
+    {
+      "id": 3,
+      "title": "App store review delays",
+      "severity": "medium",
+      "status": "open",
+      "mitigation": "Submit early, prepare for re-submissions"
+    }
+  ],
+  "notes": [
+    "Design approved 2026-02-26 20:30",
+    "Implementation plan created with 8 bite-sized tasks",
+    "Dashboard initialized for progress tracking",
+    "Ready for subagent execution"
+  ]
+}

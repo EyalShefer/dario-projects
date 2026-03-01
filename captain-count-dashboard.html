@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captain Count — Subagent Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .status.completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status.in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status.pending {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status.blocked {
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+
+        .task-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s;
+        }
+
+        .metrics {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+
+        .metric-label {
+            color: #666;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .cost {
+            color: #ef4444;
+        }
+
+        .time {
+            color: #3b82f6;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #667eea;
+            margin-top: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-time {
+            font-size: 0.8rem;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .timeline-message {
+            color: #333;
+            margin-top: 0.25rem;
+        }
+
+        .log-entry {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            border-left: 3px solid #667eea;
+        }
+
+        .log-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .log-level {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: #667eea;
+            color: white;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .log-level.error {
+            background: #ef4444;
+        }
+
+        .log-level.warning {
+            background: #f59e0b;
+        }
+
+        .log-level.info {
+            background: #3b82f6;
+        }
+
+        .log-level.success {
+            background: #10b981;
+        }
+
+        footer {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>⚡ Captain Count — Subagent Dashboard</h1>
+            <div class="header-meta">
+                <div class="stat">
+                    <div class="stat-label">Project Status</div>
+                    <div class="stat-value">Design ✓ Implementation ➜</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Total Tasks</div>
+                    <div class="stat-value">8</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Total Cost (Est.)</div>
+                    <div class="stat-value">$0 (not started)</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Total Time (Est.)</div>
+                    <div class="stat-value">40-50 hours</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Task Cards Dashboard -->
+        <section class="dashboard">
+            <!-- Task 1 -->
+            <div class="card">
+                <div class="card-title">Task 1: Analytics Setup</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Subagent #1</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">4-5 hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$2-3 (API)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Firebase Setup</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">GA4 Config</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Payment Tracking</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 2 -->
+            <div class="card">
+                <div class="card-title">Task 2: Payment Setup</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Subagent #2</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">3-4 hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$1-2 (API)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Stripe Account</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Payment Tiers</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Webhooks</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 3 -->
+            <div class="card">
+                <div class="card-title">Task 3: Store Listing</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Subagent #3</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">3-4 hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$0 (design)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Description</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Screenshots</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Keywords</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 4 -->
+            <div class="card">
+                <div class="card-title">Task 4: Marketing Assets</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Subagent #4</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">4-5 hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$0 (content)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Social Assets</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Landing Page</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Press Release</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 5 -->
+            <div class="card">
+                <div class="card-title">Task 5: Google Play Launch</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Subagent #5</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">2-3 hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$25 (store fee)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Console Setup</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">App Approved</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Live</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 6 -->
+            <div class="card">
+                <div class="card-title">Task 6: Launch Monitoring</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Monitoring Team</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">14 days (ongoing)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$0 (internal)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Day 1 Metrics</span>
+                        <span class="metric-value">Pending</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">D7 Report</span>
+                        <span class="metric-value">Pending</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Issues Found</span>
+                        <span class="metric-value">None yet</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 7 -->
+            <div class="card">
+                <div class="card-title">Task 7: Paid Ads Setup</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Subagent #7</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">3-4 hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$500+ (ads budget)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Facebook Setup</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Ad Creative</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Campaign Live</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 8 -->
+            <div class="card">
+                <div class="card-title">Task 8: Daily Reporting</div>
+                <span class="status pending">⏳ Pending</span>
+                <div class="task-details">
+                    <div class="detail-row">
+                        <span class="label">Assigned to</span>
+                        <span class="value">Subagent #8</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Time</span>
+                        <span class="value time">2-3 hours</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Est. Cost</span>
+                        <span class="value cost">$0 (automation)</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Progress</span>
+                        <div style="width: 100%;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metrics">
+                    <div class="metric-row">
+                        <span class="metric-label">Template Created</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Logging Active</span>
+                        <span class="metric-value">Not started</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Reports Generated</span>
+                        <span class="metric-value">0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline & Logs -->
+        <section class="section">
+            <div class="section-title">📋 Activity Timeline</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: #d1d5db;"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">Feb 26, 2026 — 20:30</div>
+                        <div class="timeline-message">✅ Design approved by Eyal</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: #d1d5db;"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">Feb 26, 2026 — 20:25</div>
+                        <div class="timeline-message">📝 Implementation plan created (8 tasks)</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: #d1d5db;"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">Feb 26, 2026 — 20:00</div>
+                        <div class="timeline-message">🎨 Market analysis & tiered pricing finalized</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: #d1d5db;"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">Feb 26, 2026 — 19:00</div>
+                        <div class="timeline-message">🧠 Brainstorming complete: Brazil-first strategy approved</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Logs -->
+        <section class="section">
+            <div class="section-title">📊 System Logs</div>
+            <div style="max-height: 400px; overflow-y: auto;">
+                <div class="log-entry">
+                    <span class="log-time">[2026-02-26 20:30:45]</span>
+                    <span class="log-level success">SUCCESS</span>
+                    Dashboard initialized. Ready for subagent execution.
+                </div>
+                <div class="log-entry">
+                    <span class="log-time">[2026-02-26 20:25:30]</span>
+                    <span class="log-level info">INFO</span>
+                    Implementation plan saved to docs/plans/2026-02-26-captain-count-implementation.md
+                </div>
+                <div class="log-entry">
+                    <span class="log-time">[2026-02-26 20:20:00]</span>
+                    <span class="log-level info">INFO</span>
+                    Design document approved. All 8 tasks ready for execution.
+                </div>
+                <div class="log-entry">
+                    <span class="log-time">[2026-02-26 20:00:00]</span>
+                    <span class="log-level success">SUCCESS</span>
+                    Market analysis complete. Tiered freemium model approved.
+                </div>
+                <div class="log-entry">
+                    <span class="log-time">[2026-02-26 19:30:00]</span>
+                    <span class="log-level info">INFO</span>
+                    Brainstorming session initiated. Brazil-first strategy selected.
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Stats -->
+        <section class="section">
+            <div class="section-title">📈 Project Summary</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                <div class="card" style="margin: 0;">
+                    <div class="stat-label">Total Est. Time</div>
+                    <div class="stat-value" style="font-size: 1.5rem;">40-50 hours</div>
+                    <div style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+                        ~5-6 business days with concurrent subagents
+                    </div>
+                </div>
+                <div class="card" style="margin: 0;">
+                    <div class="stat-label">Total Est. Cost</div>
+                    <div class="stat-value" style="font-size: 1.5rem;">$530-560</div>
+                    <div style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+                        APIs, store fees, initial ad budget
+                    </div>
+                </div>
+                <div class="card" style="margin: 0;">
+                    <div class="stat-label">ROI (Projected)</div>
+                    <div class="stat-value" style="font-size: 1.5rem;">2-3x in Month 1</div>
+                    <div style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+                        If we hit 5K users @ R$3 ARPU
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Last updated: <strong>Feb 26, 2026 — 20:30 UTC</strong></p>
+            <p style="margin-top: 0.5rem;">Questions? Ask Dario anytime. All logs and progress tracked automatically.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Auto-refresh every 5 minutes
+        setTimeout(() => {
+            location.reload();
+        }, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

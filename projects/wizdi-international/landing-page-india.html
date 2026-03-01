@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wizdi - AI Math Learning Platform for Indian Schools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-saffron: #FF9933;
+            --primary-blue: #1e3a8a;
+            --accent-green: #16a34a;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1e40af 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--primary-saffron);
+        }
+
+        .language-toggle {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1e40af 100%);
+            color: var(--white);
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary-saffron);
+            color: var(--text-dark);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary-saffron);
+            color: var(--text-dark);
+        }
+
+        .btn-primary:hover {
+            background: #ff8800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 1rem;
+            background: var(--light-bg);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary-saffron);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-blue);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Results Section */
+        .results {
+            padding: 4rem 1rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1e40af 100%);
+            color: var(--white);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-saffron);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 4rem 1rem;
+            background: var(--light-bg);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-saffron);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 153, 51, 0.2);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .pricing-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-saffron);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-duration {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .pricing-list {
+            text-align: left;
+            margin: 2rem 0;
+            list-style: none;
+        }
+
+        .pricing-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+
+        .pricing-list li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-list li:before {
+            content: "✓ ";
+            color: var(--accent-green);
+            font-weight: 700;
+            margin-right: 0.8rem;
+        }
+
+        /* Contact Form Section */
+        .contact {
+            padding: 4rem 1rem;
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: var(--white);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            padding: 2.5rem;
+            border-radius: 12px;
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-saffron);
+            box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-saffron);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background: #ff8800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3);
+        }
+
+        .form-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Success Message */
+        .form-message {
+            display: none;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .form-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .form-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .header-container {
+                flex-direction: row;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Hidden content for language toggle */
+        .hindi-only {
+            display: none;
+        }
+
+        .english-only {
+            display: block;
+        }
+
+        body.hindi .hindi-only {
+            display: block;
+        }
+
+        body.hindi .english-only {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">Wizdi<span>AI</span></div>
+            <button class="language-toggle" onclick="toggleLanguage()" id="langToggle">हिंदी</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge english-only">🎓 For Indian Schools & Institutions</div>
+            <div class="hero-badge hindi-only">🎓 भारतीय स्कूलों और संस्थानों के लिए</div>
+
+            <h1 class="english-only">AI-Powered Math Learning for Every Student</h1>
+            <h1 class="hindi-only">हर छात्र के लिए AI-संचालित गणित सीखना</h1>
+
+            <p class="english-only">Transform math education in your school with personalized, adaptive learning that improves scores and boosts confidence. Wizdi helps principals, teachers, and students succeed together.</p>
+            <p class="hindi-only">व्यक्तिगत, अनुकूल सीखने के साथ अपने स्कूल में गणित शिक्षा को बदलें जो स्कोर में सुधार करता है और आत्मविश्वास बढ़ाता है। विजडी प्रिंसिपल, शिक्षकों और छात्रों को एक साथ सफल होने में मदद करता है।</p>
+
+            <div class="cta-buttons">
+                <button class="btn btn-primary english-only" onclick="scrollToContact()">Start Free Trial</button>
+                <button class="btn btn-primary hindi-only" onclick="scrollToContact()">निःशुल्क परीक्षण शुरू करें</button>
+                <button class="btn btn-secondary english-only" onclick="scrollToFeatures()">See How It Works</button>
+                <button class="btn btn-secondary hindi-only" onclick="scrollToFeatures()">कैसे काम करता है देखें</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-container">
+            <h2 class="section-title english-only">Why Wizdi for Your School?</h2>
+            <h2 class="section-title hindi-only">आपके स्कूल के लिए विजडी क्यों?</h2>
+            
+            <p class="section-subtitle english-only">Designed specifically for Indian educational needs</p>
+            <p class="section-subtitle hindi-only">भारतीय शैक्षिक आवश्यकताओं के लिए विशेष रूप से डिज़ाइन किया गया</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="english-only">AI Personalization</h3>
+                    <h3 class="hindi-only">AI व्यक्तिगतकरण</h3>
+                    <p class="english-only">Each student gets a unique learning path based on their pace and learning style. No one-size-fits-all approach.</p>
+                    <p class="hindi-only">प्रत्येक छात्र को उनकी गति और सीखने की शैली के आधार पर एक अनूठा सीखने का मार्ग मिलता है।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="english-only">Adaptive Learning</h3>
+                    <h3 class="hindi-only">अनुकूल सीखना</h3>
+                    <p class="english-only">Content difficulty adjusts in real-time. Students master fundamentals before moving to advanced concepts.</p>
+                    <p class="hindi-only">सामग्री की कठिनाई वास्तविक समय में समायोजित होती है। छात्र उन्नत अवधारणाओं में जाने से पहले मूल बातें सीखते हैं।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="english-only">Progress Tracking</h3>
+                    <h3 class="hindi-only">प्रगति ट्रैकिंग</h3>
+                    <p class="english-only">Real-time dashboards for teachers and principals. Track student performance, identify gaps, and intervene early.</p>
+                    <p class="hindi-only">शिक्षकों और प्रिंसिपलों के लिए रीयल-टाइम डैशबोर्ड। छात्र के प्रदर्शन को ट्रैक करें, अंतराल की पहचान करें।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="english-only">Curriculum Aligned</h3>
+                    <h3 class="hindi-only">पाठ्यक्रम संरेखित</h3>
+                    <p class="english-only">Covers K-12 math following CBSE, ICSE, and state board guidelines. Perfect alignment with your school's syllabus.</p>
+                    <p class="hindi-only">CBSE, ICSE और स्टेट बोर्ड दिशानिर्देशों का पालन करते हुए K-12 गणित को कवर करता है।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="english-only">Bilingual Support</h3>
+                    <h3 class="hindi-only">द्विभाषी समर्थन</h3>
+                    <p class="english-only">Content available in Hindi and English. Students learn in their preferred language without losing clarity.</p>
+                    <p class="hindi-only">सामग्री हिंदी और अंग्रेजी में उपलब्ध है। छात्र अपनी पसंदीदा भाषा में स्पष्टता खोए बिना सीखते हैं।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍💼</div>
+                    <h3 class="english-only">Teacher Empowerment</h3>
+                    <h3 class="hindi-only">शिक्षक सशक्तिकरण</h3>
+                    <p class="english-only">Wizdi augments, not replaces, teachers. Rich insights help you teach smarter and spend more time on mentoring.</p>
+                    <p class="hindi-only">विजडी शिक्षकों को बदलता नहीं है, बल्कि उन्हें मजबूत करता है। समृद्ध अंतर्दृष्टि आपको स्मार्ट तरीके से पढ़ाने में मदद करती है।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results">
+        <div class="section-container">
+            <h2 class="section-title english-only">Proven Results in Indian Schools</h2>
+            <h2 class="section-title hindi-only">भारतीय स्कूलों में सिद्ध परिणाम</h2>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-number english-only">+34%</div>
+                    <div class="result-number hindi-only">+34%</div>
+                    <div class="result-label english-only">Improvement in Math Scores</div>
+                    <div class="result-label hindi-only">गणित के अंकों में सुधार</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number english-only">3.5x</div>
+                    <div class="result-number hindi-only">3.5x</div>
+                    <div class="result-label english-only">Faster Concept Mastery</div>
+                    <div class="result-label hindi-only">तेजी से अवधारणा में महारत</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number english-only">89%</div>
+                    <div class="result-number hindi-only">89%</div>
+                    <div class="result-label english-only">Student Engagement Rate</div>
+                    <div class="result-label hindi-only">छात्र जुड़ाव दर</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number english-only">500+</div>
+                    <div class="result-number hindi-only">500+</div>
+                    <div class="result-label english-only">Schools Across India</div>
+                    <div class="result-label hindi-only">भारत भर में स्कूल</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="section-container">
+            <h2 class="section-title english-only">Simple, Transparent Pricing</h2>
+            <h2 class="section-title hindi-only">सरल, पारदर्शी मूल्य निर्धारण</h2>
+            
+            <p class="section-subtitle english-only">Choose the plan that fits your school size</p>
+            <p class="section-subtitle hindi-only">अपने स्कूल के आकार के अनुसार योजना चुनें</p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="english-only">Starter</h3>
+                    <h3 class="hindi-only">स्टार्टर</h3>
+                    <div class="pricing-amount english-only">Free</div>
+                    <div class="pricing-amount hindi-only">निःशुल्क</div>
+                    <div class="pricing-duration english-only">Forever Trial</div>
+                    <div class="pricing-duration hindi-only">हमेशा के लिए परीक्षण</div>
+                    <ul class="pricing-list">
+                        <li class="english-only">Up to 50 students</li>
+                        <li class="hindi-only">50 तक छात्र</li>
+                        <li class="english-only">Basic analytics</li>
+                        <li class="hindi-only">बुनियादी विश्लेषण</li>
+                        <li class="english-only">Email support</li>
+                        <li class="hindi-only">ईमेल समर्थन</li>
+                        <li class="english-only">Community access</li>
+                        <li class="hindi-only">समुदाय अभिगम</li>
+                    </ul>
+                    <button class="btn btn-primary english-only" onclick="scrollToContact()">Get Started</button>
+                    <button class="btn btn-primary hindi-only" onclick="scrollToContact()">शुरु करना</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3 class="english-only">School License</h3>
+                    <h3 class="hindi-only">स्कूल लाइसेंस</h3>
+                    <div class="pricing-amount english-only">₹4,999</div>
+                    <div class="pricing-amount hindi-only">₹4,999</div>
+                    <div class="pricing-duration english-only">Per Month</div>
+                    <div class="pricing-duration hindi-only">प्रति माह</div>
+                    <ul class="pricing-list">
+                        <li class="english-only">Unlimited students</li>
+                        <li class="hindi-only">असीमित छात्र</li>
+                        <li class="english-only">Advanced analytics</li>
+                        <li class="hindi-only">उन्नत विश्लेषण</li>
+                        <li class="english-only">Priority support</li>
+                        <li class="hindi-only">प्राथमिकता समर्थन</li>
+                        <li class="english-only">Custom reports</li>
+                        <li class="hindi-only">कस्टम रिपोर्ट</li>
+                        <li class="english-only">Admin dashboard</li>
+                        <li class="hindi-only">प्रशासक डैशबोर्ड</li>
+                    </ul>
+                    <button class="btn btn-primary english-only" onclick="scrollToContact()">Start Trial</button>
+                    <button class="btn btn-primary hindi-only" onclick="scrollToContact()">परीक्षण शुरू करें</button>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="english-only">Enterprise</h3>
+                    <h3 class="hindi-only">एंटरप्राइज</h3>
+                    <div class="pricing-amount english-only">Custom</div>
+                    <div class="pricing-amount hindi-only">कस्टम</div>
+                    <div class="pricing-duration english-only">For Districts/Chains</div>
+                    <div class="pricing-duration hindi-only">जिलों/श्रृंखलाओं के लिए</div>
+                    <ul class="pricing-list">
+                        <li class="english-only">Multi-school access</li>
+                        <li class="hindi-only">बहु-स्कूल पहुंच</li>
+                        <li class="english-only">Dedicated manager</li>
+                        <li class="hindi-only">समर्पित प्रबंधक</li>
+                        <li class="english-only">Custom curriculum mapping</li>
+                        <li class="hindi-only">कस्टम पाठ्यक्रम मानचित्र</li>
+                        <li class="english-only">Integration support</li>
+                        <li class="hindi-only">एकीकरण समर्थन</li>
+                        <li class="english-only">SLA guarantee</li>
+                        <li class="hindi-only">SLA गारंटी</li>
+                    </ul>
+                    <button class="btn btn-primary english-only" onclick="scrollToContact()">Contact Us</button>
+                    <button class="btn btn-primary hindi-only" onclick="scrollToContact()">संपर्क करें</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <h2 class="section-title english-only" style="color: white;">Start Your Free Trial Today</h2>
+            <h2 class="section-title hindi-only" style="color: white;">आज ही अपना निःशुल्क परीक्षण शुरू करें</h2>
+            
+            <p class="section-subtitle english-only" style="color: rgba(255,255,255,0.9);">Join 500+ schools already using Wizdi</p>
+            <p class="section-subtitle hindi-only" style="color: rgba(255,255,255,0.9);">पहले से ही विजडी का उपयोग करने वाले 500+ स्कूलों में शामिल हों</p>
+
+            <form class="contact-form" id="contactForm">
+                <div id="formMessage" class="form-message"></div>
+
+                <div class="form-group">
+                    <label class="english-only">Name *</label>
+                    <label class="hindi-only">नाम *</label>
+                    <input type="text" name="name" placeholder="Your Full Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="english-only">Email *</label>
+                    <label class="hindi-only">ईमेल *</label>
+                    <input type="email" name="email" placeholder="your.email@school.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="english-only">School Name *</label>
+                    <label class="hindi-only">स्कूल का नाम *</label>
+                    <input type="text" name="schoolName" placeholder="Your School Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="english-only">Phone Number *</label>
+                    <label class="hindi-only">फोन नंबर *</label>
+                    <input type="tel" name="phone" placeholder="+91 9876543210" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="english-only">Message (Optional)</label>
+                    <label class="hindi-only">संदेश (वैकल्पिक)</label>
+                    <textarea name="message" placeholder="Tell us about your school and what you're looking for..."></textarea>
+                </div>
+
+                <button type="submit" class="form-submit english-only">Start Free Trial</button>
+                <button type="submit" class="form-submit hindi-only">निःशुल्क परीक्षण शुरू करें</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text english-only">&copy; 2026 Wizdi. All rights reserved. Transforming math education across India.</p>
+            <p class="footer-text hindi-only">&copy; 2026 विजडी। सर्वाधिकार सुरक्षित। भारत भर में गणित शिक्षा को बदलना।</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        function toggleLanguage() {
+            const body = document.body;
+            const toggle = document.getElementById('langToggle');
+            
+            if (body.classList.contains('hindi')) {
+                body.classList.remove('hindi');
+                toggle.textContent = 'हिंदी';
+            } else {
+                body.classList.add('hindi');
+                toggle.textContent = 'English';
+            }
+        }
+
+        // Scroll to Sections
+        function scrollToContact() {
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: this.name.value,
+                email: this.email.value,
+                schoolName: this.schoolName.value,
+                phone: this.phone.value,
+                message: this.message.value || 'No additional message',
+                timestamp: new Date().toISOString()
+            };
+
+            // Show success message
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.className = 'form-message success';
+            messageDiv.textContent = document.body.classList.contains('hindi') 
+                ? 'आपकी जानकारी सफलतापूर्वक जमा हो गई! हम जल्द ही संपर्क करेंगे।'
+                : 'Your information has been submitted successfully! We will contact you shortly.';
+
+            // Store data (in production, send to backend/email service)
+            console.log('Form Data:', formData);
+            
+            // Reset form
+            this.reset();
+
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageDiv.className = 'form-message';
+            }, 5000);
+        });
+
+        // Analytics - Track when user views different sections
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    console.log('Section viewed:', entry.target.id);
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
