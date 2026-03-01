@@ -2,13 +2,54 @@
 
 **Date:** 2026-03-01  
 **Status:** Backlog (not critical, nice-to-have improvements)  
-**Total Effort:** ~5.5 hours
+**Total Effort:** ~6 hours
 
 These are improvements that make the app better but don't block core functionality.
 
 ---
 
 ## Backlog Items
+
+### 0. Fix Broken Live Session Lookup
+
+**Effort:** 0.5 hours
+
+#### 0.1: Fix getSessionByCode Function
+**Impact:** Live lesson feature works (when implemented)  
+**File:** `src/services/liveSessionService.ts`
+
+**Current:** Function is broken — always returns null
+```typescript
+export async function getSessionByCode(code: string): Promise<LiveVideoSession | null> {
+  const q = query(
+    collection(db, LIVE_SESSIONS_COLLECTION),
+    where('sessionCode', '==', code.toUpperCase()),
+    where('status', '!=', 'ended')
+  );
+  // Query created but never executed!
+  // TODO: Add proper index and query
+  return null; // ← Always returns null
+}
+```
+
+**What it means for users:**
+- Teachers can start live lessons
+- Students enter the code to join
+- **Students get "session not found" error** even though session exists
+- Students can't join the live lesson
+
+**Why it matters:**
+- Live teaching is broken if someone tries to use it
+- Students can't participate in real-time lessons
+
+**Fix:**
+1. Import `getDocs` from Firebase
+2. Execute the query instead of just creating it
+3. Return the found session or null
+
+**Note:** Live teaching feature seems not fully implemented yet (no teacher UI button to start). This fix makes it ready when that UI is added.
+
+---
 
 ### 1. Cleanup: Remove Debug Code from Production
 
@@ -209,17 +250,18 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 ## Questions for You
 
-1. **Priority 3.2 (getSessionByCode fix):** Should I still apply this, or skip it for now since the live teaching feature isn't actively used?
+1. **i18n system:** Does the project already have react-i18next or similar? Or should we skip items 2.2-2.3?
 
-2. **i18n system:** Does the project already have react-i18next or similar? Or should we skip 2.2-2.3 for now?
-
-3. **Timeline:** When would you want these low-priority fixes? (this month, next quarter, etc.)
+2. **Timeline:** When would you want these backlog items? (this month, next quarter, etc.)
 
 ---
 
 ## Summary
 
-**High-value, low-effort fixes (do first):**
+**All items below are backlog — implement when you have capacity.**
+
+**High-value, low-effort (do first when time permits):**
+- 0.1: Fix getSessionByCode (30 min, enables live teaching)
 - 1.3: Remove debug logging (30 min, makes console clean)
 - 3.1: File size validation (30 min, improves UX)
 
@@ -227,10 +269,10 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 - 1.1: Remove debug state (30 min, code cleanliness)
 - 2.1: Add ARIA labels (1.5 hours, accessibility)
 
-**Lower priority (skip if busy):**
+**Lower priority (do later or skip):**
 - 1.2: Move debug overlay (1 hour, depends on what it does)
 - 2.2-2.3: i18n labels (2 hours, only if you want multi-language support)
 
 ---
 
-**Ready to implement any of these when you give the go-ahead.**
+**Current Focus:** QA feedback loop monitoring. Fix bugs as testers report them (via Firestore qa_chat collection).
