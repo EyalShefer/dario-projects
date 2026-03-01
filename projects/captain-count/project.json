@@ -3,9 +3,9 @@
   "name": "Captain Count",
   "description": "High-quality math education game for K-2 grades. 70 mini-games covering grade 1 curriculum. Languages: Portuguese, English, Spanish, Hebrew.",
   "status": "in_progress",
-  "progress_percent": 24,
+  "progress_percent": 20,
   "started_at": "2026-02-26",
-  "updated_at": "2026-02-28T14:00:00Z",
+  "updated_at": "2026-03-01T14:27:00Z",
   "market": "Brazil-first (210M market, high EdTech adoption)",
   "launch_timeline": {
     "soft_launch": "Week 1-2 (organic)",
@@ -32,7 +32,7 @@
       "duration_minutes": null,
       "estimated_hours": 2,
       "description": "Firebase, GA4, Mixpanel setup + payment tracking schema + Stripe integration",
-      "note": "Firebase + GA4 complete (Eyal). Awaiting Stripe account setup.",
+      "note": "Firebase + GA4 complete (Eyal). Awaiting Stripe account setup. QA Chat Monitor (Firestore→Telegram) now live.",
       "subtasks": [
         {
           "name": "Documentation & Templates",
