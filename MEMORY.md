@@ -39,6 +39,32 @@
   - Action: Should have checked code first, then updated dashboard automatically
   - Lesson: Be ProActive, not reactive
 
+## Code Safety Protocol (CRITICAL - 2026-03-01)
+
+**Rule: NEVER suggest changes that could destroy or overwrite existing code.**
+
+Before giving ANY implementation instruction:
+1. **READ FIRST** — Check what's already there
+2. **COMPARE** — Understand differences between new and existing
+3. **PROPOSE MINIMAL CHANGES** — Only suggest additions/edits, never full replacements
+4. **ASK BEFORE APPLYING** — Always ask for approval after showing the change
+
+**Examples of WRONG approach (what I did):**
+- ❌ "Replace entire Firestore rules with this..."
+- ❌ "Rewrite the whole file..."
+- ❌ "Change config.json to..."
+
+**Examples of RIGHT approach:**
+- ✅ "Show me the current rules, then propose minimal changes"
+- ✅ "Add this rule to the existing rules without touching others"
+- ✅ "Read the current file, identify what needs to change, propose diff"
+
+**When in doubt:** Always ask Eyal first before modifying ANY system-wide configs, security rules, or production files.
+
+This is non-negotiable. Code safety > speed.
+
+---
+
 ## QA Testing Protocol (CRITICAL - 2026-03-01)
 
 **Rule: Never assume or guess what testers mean. Ask iteratively.**
