@@ -79,25 +79,78 @@ Only after tester approval: `git push origin master:main`
 **To QA Tester (Firestore / Telegram):**
 
 ```
-1. Bug reported → Acknowledge receipt
-   "Received: [bug description]. Investigating..."
+1. Bug reported → Acknowledge + Ask Questions
+   "תודה על הדיווח. כמה שאלות להבהרה:
+    - בדיוק מה עשית כשזה קרה?
+    - מה היה צריך להיות?"
+   
+   (Wait for answer)
+   
+   "בהבנתי [restate problem]. זה נכון?"
+   
+   (Confirm understanding)
 
-2. Starting fix → Update status
-   "Working on [bug]. Expected: [time]"
+2. Understanding confirmed → Start investigating
+   "ברור. עכשיו אתקן את זה."
 
-3. Fix ready → Request verification
-   "Fix ready for testing. Please verify:
-    [steps to reproduce]
-    Expected result: [description]"
+3. Starting fix → Update status
+   "עובד על התיקון. צפוי: [time]"
 
-4. Tester confirms → Deploy
-   "Confirmed working. Pushing to production."
+4. Fix ready → Request verification
+   "התיקון מוכן. בדוק בבקשה:
+    שלבים: [steps]
+    צפוי: [expected result]"
+
+5. Tester confirms → Deploy
+   "אישור קיבלתי. דוחף לפרודוקשין."
 ```
+
+**Language:** Use Hebrew (תלויה בעדיפות הבודק)
+
+---
+
+## Tester Communication Protocol (CRITICAL)
+
+**When receiving a bug report from testers:**
+
+1. **Read the report carefully**
+   - What is the symptom?
+   - When does it happen?
+   - What should happen instead?
+
+2. **Ask clarifying questions (iteratively)**
+   - If unclear: "Can you describe exactly what you did?"
+   - If ambiguous: "Is the problem in X or Y?"
+   - If missing steps: "What did you do before this happened?"
+   - Ask ONE question at a time
+   - Wait for answer before next question
+
+3. **Confirm understanding**
+   - Restate the problem in your own words
+   - "So the issue is: [your understanding]. Is that correct?"
+   - Get tester confirmation
+
+4. **Confirm expected behavior**
+   - "What should happen instead?"
+   - Get specific description of expected result
+   - "When we fix this, it should [your description]. Yes?"
+
+5. **Only when CERTAIN:**
+   - Proceed to fix
+   - You know exact problem
+   - You know exact expected behavior
+   - Zero ambiguity
+
+**Why:** Prevents fixing wrong thing, wasting time, breaking other features.
 
 ---
 
 ## Implementation Checklist
 
+- [ ] **Bug report received**
+- [ ] **Questions asked & answered** (iterative until clear)
+- [ ] **Understanding confirmed** (with tester)
+- [ ] **Expected behavior confirmed** (with tester)
 - [ ] Bug identified and priority assigned
 - [ ] Scope verified (within allowed rules)
 - [ ] Risk analysis done
@@ -108,6 +161,34 @@ Only after tester approval: `git push origin master:main`
 - [ ] Unit tests written/updated
 - [ ] QA tester verification obtained
 - [ ] GitHub push completed
+
+---
+
+## Required Bug Report Information
+
+**Every bug report must clarify (via iterative questioning):**
+
+1. **What is the symptom?**
+   - "The button doesn't work"
+   - More specific: "When I click upload, it shows [error message]"
+
+2. **When does it happen?**
+   - "Always"
+   - "Only with large files"
+   - "Only on slow internet"
+   - "Only after [steps]"
+
+3. **What should happen instead?**
+   - Current: "Button is disabled"
+   - Expected: "Button should be enabled and clickable"
+
+4. **How to reproduce?**
+   - Exact steps: "1. Open page, 2. Click button, 3. [error shows]"
+   - Environment: "Chrome on Windows" / "Safari on iPhone" / etc.
+
+5. **Is it blocking work?**
+   - "Can't continue without fixing this"
+   - "Minor annoyance, can work around it"
 
 ---
 
@@ -122,6 +203,11 @@ Only after tester approval: `git push origin master:main`
 - Present options to Eyal
 - Propose workaround or architectural change
 - Get approval before proceeding
+
+**If bug report is unclear:**
+- Ask more questions (iterate until clear)
+- Do NOT guess or assume
+- Get tester confirmation before fixing
 
 ---
 

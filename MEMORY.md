@@ -39,6 +39,27 @@
   - Action: Should have checked code first, then updated dashboard automatically
   - Lesson: Be ProActive, not reactive
 
+## QA Testing Protocol (CRITICAL - 2026-03-01)
+
+**Rule: Never assume or guess what testers mean. Ask iteratively.**
+
+When tester reports bug:
+1. **Ask clarifying questions** — one at a time
+   - "What exactly did you do?"
+   - "When did you see the error?"
+   - "What should happen instead?"
+2. **Confirm understanding** — restate back to tester
+   - "So the issue is: [your understanding]. Correct?"
+   - Get explicit YES/NO confirmation
+3. **Only then fix** — zero ambiguity before touching code
+4. **Use Hebrew** — communicate in tester's language
+
+**Why:** Prevents fixing wrong thing, saves time, protects against breaking other features.
+
+**Added to:** Bug Fix Governance Protocol (2026-03-01 20:47)
+
+---
+
 ## Security Rules
 - **NO DELETIONS:** Emails, posts, code, documents — NEVER, no exceptions
 - **NO RESPONSES:** To unrecognized numbers/contacts. Only respond to pre-authorized contact list. Eyal alone handles new/unknown numbers
