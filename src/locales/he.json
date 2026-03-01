@@ -1,0 +1,61 @@
+{
+  "exam": {
+    "upload": {
+      "title": "העלאת מבחן ייחוס",
+      "description": "העלה מבחן קיים (מהמדריך למורה או ממשרד החינוך) והמערכת תחלץ את ה-DNA שלו - מבנה, סוגי שאלות, רמות קושי.\nבהמשך, המערכת תשתמש ב-DNA הזה כתבנית ליצירת מבחנים חדשים.",
+      "selectPdfFile": "קובץ PDF של המבחן",
+      "selectedFile": "נבחר",
+      "fileSizeMB": "MB",
+      "selectSubject": "מקצוע",
+      "selectGrade": "כיתה",
+      "gradePrefix": "כיתה",
+      "selectExamType": "סוג המבחן",
+      "source": "מקור (אופציונלי)",
+      "sourcePlaceholder": "מדריך למורה, משרד החינוך...",
+      "year": "שנה (אופציונלי)",
+      "yearPlaceholder": "2024",
+      "uploadButton": "העלה וחלץ DNA",
+      "processing": "מעבד...",
+      "selectTextbook": "בחר ספר לימוד",
+      "selectChapters": "בחר פרקים",
+      "chapterPrefix": "פרק",
+      "selectedChapters": "נבחרו: פרקים",
+      "fileSizeError": "גודל הקובץ חייב להיות קטן מ-50MB. גודל הקובץ שלך:",
+      "error": {
+        "selectPdfOnly": "יש לבחור קובץ PDF בלבד",
+        "selectFile": "יש לבחור קובץ",
+        "selectTextbook": "יש לבחור ספר לימוד",
+        "selectChapters": "יש לבחור לפחות פרק אחד",
+        "uploadFailed": "שגיאה בהעלאת הקובץ",
+        "networkRetry": "שגיאת רשת. אנא נסה שוב עוד כמה רגעים או לחץ על \"חזור על הניסיון\".\n(ניסיון"
+      },
+      "progress": {
+        "uploadingFile": "מעלה קובץ...",
+        "extractingDna": "מחלץ DNA מהמבחן..."
+      }
+    },
+    "subject": {
+      "label": "מקצוע",
+      "math": "מתמטיקה",
+      "hebrew": "עברית",
+      "english": "אנגלית",
+      "science": "מדעים",
+      "history": "היסטוריה",
+      "other": "אחר"
+    },
+    "examTypes": {
+      "unitExam": "מבחן יחידה / סיכום פרק",
+      "midterm": "מבחן אמצע",
+      "final": "מבחן מסכם",
+      "quiz": "בוחן קצר"
+    },
+    "accessibility": {
+      "selectFile": "בחר קובץ PDF של מבחן",
+      "fileHelp": "קובץ PDF בגודל עד 50MB",
+      "selectSubject": "בחר מקצוע",
+      "subjectHelp": "בחר את המקצוע של המבחן",
+      "selectGrade": "בחר כיתה",
+      "gradeHelp": "בחר את הכיתה"
+    }
+  }
+}
