@@ -680,7 +680,12 @@
             const tbody = document.getElementById('projects-tbody');
             tbody.innerHTML = '';
 
-            projectsData.projects.forEach(project => {
+            // Sort by updated_at (newest first)
+            const sortedProjects = [...projectsData.projects].sort((a, b) => {
+                return new Date(b.updated_at) - new Date(a.updated_at);
+            });
+
+            sortedProjects.forEach(project => {
                 const row = document.createElement('tr');
                 row.className = selectedProject?.id === project.id ? 'active' : '';
                 row.innerHTML = `
@@ -696,7 +701,7 @@
                         </div>
                         <div class="progress-text">${project.progress_percent}%</div>
                     </td>
-                    <td class="updated-at">${timeAgo(project.updated_at)}</td>
+                    <td class="updated-at">${formatDate(project.updated_at)}</td>
                 `;
                 row.onclick = () => selectProject(project.id);
                 tbody.appendChild(row);
