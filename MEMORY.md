@@ -23,9 +23,13 @@
 - **Calendar queries:** Need URL encoding for filter parameters
 - **Unrecognized contacts:** NEVER respond — only Eyal handles new numbers
 - **Contact introduction:** When responding to WhatsApp authorized contacts, identify self as "דריו, העוזר האישי של אייל"
-- **Infrastructure Documentation First (NEW):** Document system design & requirements before implementation — clarifies scope, reduces rework, enables parallel task execution (Firebase/GA4/Stripe setup can run while Task 2 coding proceeds)
-- **Parallel Task Execution (NEW):** Console/manual setup work (Firebase, GA4, Stripe) can run independently from coding tasks — use for optimization in pre-launch phases
-- **Task Continuity Pattern (NEW):** Task logs (task-logs/ directory) enable night → day handoff seamlessly; daily notes pull task log summaries automatically via cron
+- **Infrastructure Documentation First:** Document system design & requirements before implementation — clarifies scope, reduces rework, enables parallel task execution (Firebase/GA4/Stripe setup can run while Task 2 coding proceeds)
+- **Parallel Task Execution:** Console/manual setup work (Firebase, GA4, Stripe) can run independently from coding tasks — use for optimization in pre-launch phases
+- **Task Continuity Pattern:** Task logs (task-logs/ directory) enable night → day handoff seamlessly; daily notes pull task log summaries automatically via cron
+- **Architecture-First Approach:** Build infrastructure (Firebase, dashboards, monitoring) before implementation; enables parallel execution and reduces rework (validated by Captain Count dashboard + QA Chat Monitor)
+- **JSON-First Data Design:** Separate data from display (JSON files in public/projects/) — updates trivial, no HTML rewrites needed
+- **Memory Discipline:** Daily notes + MEMORY.md structure prevents context loss across sessions; nightly sync automation reduces cognitive load
+- **ProActive Autonomy Pattern:** GitHub PAT in CREDENTIALS.md is for autonomous use — proactively audit code, verify against dashboard, correct discrepancies without waiting for explicit instructions (validated 2026-03-01: Wizdi Tasks 5-8 found complete but not marked)
 
 ## ⚡ CRITICAL: ProActive Code Checking (2026-03-01)
 - **Rule:** When asked about project status with code in GitHub → CHECK THE CODE FIRST
@@ -540,18 +544,69 @@ When tester reports bug:
 
 ---
 
-## Current Operational Status (as of 2026-03-01 20:15 PM)
+## Work Session: 2026-03-01 Day (QA Chat Monitor + Dashboard Fixes)
+
+**Infrastructure Added:** QA Chat Monitor (Firestore→Telegram Bridge) — LIVE
+
+### QA Chat Monitor Deployment
+- **Architecture:** Firestore collection (qa_chat) → Dario cron (every 2 min) → Telegram notifications to Eyal
+- **Firebase:** ai-lms-pro project (region eur3), service account key integrated
+- **Telegram:** TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID configured in OpenClaw
+- **Status:** ✅ LIVE since 11:21 AM 2026-03-01
+- **Impact:** Wizdi AI Studio testers report bugs via chat widget → auto notifications to Eyal
+- **Decision Pattern:** Chose Option 1 (Dario reads Firestore, sends Telegram) after clarifying 3 options with Eyal
+- **Lesson:** Avoided unnecessary complexity (Cloud Functions not needed for notifications; clear separation: Cloud Functions = data storage, Dario = notifications + intelligence)
+
+### Dashboard Fix: Tasks Truncation (Priority 1)
+- **Problem:** Tasks 4-8 hidden (tasks-list container max-height=300px truncated view)
+- **Solution:** Removed max-height constraint + removed internal overflow-y (external page scroll only)
+- **Commits:** a04ba1b → a819550 → e5f43c1
+- **Status:** All 8 tasks now visible in dashboard
+
+### Wizdi AI Studio Code Verification (ProActive Pattern Executed)
+- **Trigger:** Eyal asked "מה קרה שם" (what happened?) regarding task count in Wizdi feedback loop
+- **Action:** Cloned ai-lms-system (private repo), audited code
+- **Finding:** Tasks 5-8 were 100% COMPLETE in code, but dashboard showed 5% (in_progress) — **DISCREPANCY FOUND**
+- **Correction:** Updated dashboard to reflect actual code status (all 4 feedback loop tasks = 100% completed)
+- **Commits:** 02deeea + 4493056
+- **Key Insight:** GitHub = source of truth (code = reality), Dashboard = plan. When discrepancies appear, trust code.
+
+### New Insights Added to MEMORY.md
+
+#### Architecture-First Decision Pattern
+- QA Chat Monitor: Chose Option 1 after clarifying options (Firestore → Dario → Telegram)
+- Avoided premature optimization (didn't need Cloud Functions)
+- Clear separation of concerns: storage (Firebase) vs intelligence (Dario)
+
+#### ProActive Code Verification (Now Executed Successfully)
+- Rule applied in real scenario: Asked about Wizdi task status
+- **Action:** Cloned repo, verified actual code vs dashboard
+- **Result:** Found & corrected discrepancy (tasks 5-8 were complete but not marked)
+- **Outcome:** Pattern validated — GitHub PAT should be used autonomously, not reactively
+- **Lesson:** Eyal asks question → Dario checks code immediately → Dario corrects dashboard → Report actual status
+
+---
+
+## Current Operational Status (as of 2026-03-02 01:00 AM)
 
 **Captain Count Launch Track:**
-- Task 1: 75% (Firebase/GA4 ✅, Stripe setup pending from Eyal — today/tomorrow)
+- Task 1: 75% (Firebase/GA4 ✅, Stripe setup pending from Eyal)
 - Task 2: Ready to execute (payment processing, 3.5 hours) — Awaiting Stripe account
 - Tasks 3-8: Queued (~12 hours remaining)
 - Blockers: None (Stripe account creation can run in parallel)
 
+**Wizdi AI Studio Track:**
+- Feedback Loop Tasks (5-8): 100% complete ✅ (verified in code)
+- QA Chat Monitor: LIVE ✅ (cron every 2 min, Firestore→Telegram)
+- Dashboard: Fixed truncation bug ✅
+- Outstanding bugs: Priority 1-2 bugs fixed (5 commits), i18n labels deferred (requires i18n system build)
+
 **Infrastructure Operational:**
 - GitHub repo: https://github.com/EyalShefer/dario-projects ✅ (pages live, auto-push verified)
+- Wizdi AI Studio repo: https://github.com/EyalShefer/ai-lms-system ✅ (private, audited)
 - Master Dashboard: Production + auto-refresh (30s interval) ✅
 - Analytics setup: Firebase config + GA4 schema ✅
+- QA Chat Monitor: Cron every 2 min ✅
 - Nightly sync cron: Running at 02:00 AM ✅
 - Credentials: GitHub PAT in CREDENTIALS.md ✅
 
@@ -562,3 +617,4 @@ When tester reports bug:
 4. NO deletions of any kind (emails, posts, code, documents)
 5. NO responses to unrecognized phone numbers/contacts — only authorized list
 6. HEARTBEAT.md enforces all protocols (read first, every time)
+7. ProActive Code Checking: When asked about project status with GitHub access → CHECK CODE FIRST, then update dashboard/report
