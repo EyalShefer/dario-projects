@@ -31,14 +31,9 @@
       "completed_at": null,
       "duration_minutes": null,
       "estimated_hours": 2,
-      "description": "Firebase, GA4, Mixpanel setup + payment tracking schema + Stripe integration",
-      "note": "Firebase + GA4 complete (Eyal). Awaiting Stripe account setup. QA Chat Monitor (Firestore→Telegram) now live.",
+      "description": "Firebase setup + payment tracking schema + Stripe integration. Google Play Console handles built-in analytics automatically (no SDK needed).",
+      "note": "Firebase ✅ complete. Payment tracking schema ✅ ready. QA Chat Monitor (Firestore→Telegram) live. Google Play Console provides automatic analytics (engaged users, retention, crashes) with no code required. Awaiting Stripe account setup.",
       "subtasks": [
-        {
-          "name": "Documentation & Templates",
-          "status": "completed",
-          "description": "ANALYTICS_SETUP.md, firebase-config.json, GA4 schema, payment tracking schema, event checklist"
-        },
         {
           "name": "Firebase Project Setup",
           "status": "completed",
@@ -47,11 +42,10 @@
           "completed_at": "2026-02-27T16:00:00Z"
         },
         {
-          "name": "GA4 Property Setup",
+          "name": "Payment Tracking Schema",
           "status": "completed",
-          "description": "Create GA4 property, link to Firebase, configure custom events/dimensions",
-          "completed_by": "Eyal",
-          "completed_at": "2026-02-27T16:00:00Z"
+          "description": "Firestore schema for payment logs + transaction history",
+          "completed_at": "2026-02-28T00:00:00Z"
         },
         {
           "name": "Stripe Account Setup",
