@@ -150,8 +150,8 @@ node scripts/qa-chat-listener.js
 
 **Test manually:**
 ```bash
-export TELEGRAM_BOT_TOKEN=8431716250:AAHXNnc1u5Z1ez2AmMiZNjKmk3VeWMrc1qo
-export TELEGRAM_CHAT_ID=772680940
+export TELEGRAM_BOT_TOKEN=<your-bot-token>
+export TELEGRAM_CHAT_ID=<your-chat-id>
 node scripts/dario-heartbeat.js
 ```
 
@@ -189,8 +189,8 @@ node scripts/dario-heartbeat.js
 
 **Test manually:**
 ```bash
-export TELEGRAM_BOT_TOKEN=8431716250:AAHXNnc1u5Z1ez2AmMiZNjKmk3VeWMrc1qo
-export TELEGRAM_CHAT_ID=772680940
+export TELEGRAM_BOT_TOKEN=<your-bot-token>
+export TELEGRAM_CHAT_ID=<your-chat-id>
 node scripts/dario-heartbeat-monitor.js
 ```
 

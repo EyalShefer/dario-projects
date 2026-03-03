@@ -6,8 +6,13 @@
 
 const TelegramAPI = require('node-telegram-bot-api');
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8431716250:AAHXNnc1u5Z1ez2AmMiZNjKmk3VeWMrc1qo';
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '772680940';
+const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT_ID) {
+  console.error('[Heartbeat] Error: TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID env vars required');
+  process.exit(1);
+}
 
 const bot = new TelegramAPI(TELEGRAM_TOKEN);
 
