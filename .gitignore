@@ -9,3 +9,4 @@ GoogleService-Info.plist
 firebase-config/secrets/
 build/
 dist/
+.worktrees/
