@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // QA Chat collection - testers can write, Dario can read/write
+    match /qa_chat/{document=**} {
+      allow read: if request.auth != null;
+      allow create: if request.auth.uid in ['tester-001', 'tester-002', 'tester-003', 'dario'];
+      allow update: if false;
+      allow delete: if false;
+    }
+    
+    // Dario queue - Cloud Function writes, Dario reads
+    match /dario-queue/{document=**} {
+      allow read: if request.auth.uid == 'dario';
+      allow create: if request.auth.uid == 'cloud-function';
+      allow update: if request.auth.uid == 'dario' || request.auth.uid == 'cloud-function';
+      allow delete: if false;
+    }
+    
+    // Error logs - system can write, Dario can read
+    match /error-logs/{document=**} {
+      allow read: if request.auth.uid == 'dario';
+      allow create: if request.auth.uid in ['cloud-function', 'dario'];
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
