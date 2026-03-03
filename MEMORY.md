@@ -98,7 +98,7 @@ When tester reports bug:
   - NOT inferred from past sessions
   - NOT assumed based on context
   - Reading is safe; writing requires approval
-- **Authenticated Channel:** Telegram only (@DarioAgent_bot, Chat ID: 772680940, Bot Token: 8431716250:AAHXNnc1u5Z1ez2AmMiZNjKmk3VeWMrc1qo)
+- **Authenticated Channel:** Telegram only (@DarioAgent_bot, Chat ID: 772680940, Bot Token: [in CREDENTIALS.md])
 - **Channel Authorization:**
   - WhatsApp: DISCONNECTED (privacy/history storage concern)
   - Telegram: ACTIVE — primary authenticated channel
@@ -190,7 +190,7 @@ When tester reports bug:
 ## Tools & Integrations
 - **Maton APIs:** Jira, Outlook (Eyal@bonusbooks.co.il), LinkedIn — all ACTIVE (as of 2026-02-25)
 - **Superpowers skills:** 14 installed — all major development workflows available
-- **Telegram Bot:** @DarioAgent_bot | Chat ID: 772680940 | Token: 8431716250:AAHXNnc1u5Z1ez2AmMiZNjKmk3VeWMrc1qo
+- **Telegram Bot:** @DarioAgent_bot | Chat ID: 772680940 | Token: [in CREDENTIALS.md]
 - **Google Docs:** Integrated for reading Adva's feedback on shared documents
 - **Outlook Calendar:** Working integration with Eyal@bonusbooks.co.il
 - **Task Logging System:** task-logs/ directory — all overnight/scheduled tasks logged for morning review continuity (as of 2026-02-26)
@@ -291,7 +291,7 @@ When tester reports bug:
 
 - **Channel Status Update:**
   - WhatsApp: **DISCONNECTED** — Privacy concern (history storage)
-  - Telegram: **ACTIVE** — @DarioAgent_bot | Chat ID: 772680940 | Token: 8431716250:AAHXNnc1u5Z1ez2AmMiZNjKmk3VeWMrc1qo
+  - Telegram: **ACTIVE** — @DarioAgent_bot | Chat ID: 772680940 | Token: [in CREDENTIALS.md]
 
 - **Maton Integrations Operational:**
   - MATON_API_KEY added to config (env.vars)
