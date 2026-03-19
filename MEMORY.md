@@ -238,7 +238,7 @@ When tester reports bug:
 - **Outlook Calendar:** Working integration with Eyal@bonusbooks.co.il
 - **Task Logging System:** task-logs/ directory — all overnight/scheduled tasks logged for morning review continuity (as of 2026-02-26)
 
-## Credentials Storage (⚠️ CRITICAL)
+## Credentials Storage (⚠️ CRITICAL - 2026-03-19 SECURITY FIX)
 - **File:** `/data/.openclaw/workspace/CREDENTIALS.md`
 - **Purpose:** Store all sensitive tokens (GitHub PAT, SSH keys, API keys, passwords)
 - **Read Protocol:** HEARTBEAT.md explicitly requires reading CREDENTIALS.md FIRST before any auth operations
@@ -247,8 +247,22 @@ When tester reports bug:
   - Log credentials in commits or messages
   - Store credentials in MEMORY.md (memory-only, heartbeat won't read)
   - Use environment variables (not persistent across sessions)
-- **Current Credentials:**
-  - GitHub Personal Access Token (ghp_*) — Active, stored in CREDENTIALS.md (2026-02-27)
+  - Commit CREDENTIALS.md to git ⚠️ CRITICAL
+
+**CRITICAL SECURITY FIX (2026-03-19 01:00 AM):**
+- **Issue Found:** CREDENTIALS.md was NOT in .gitignore
+- **Risk:** Credentials could be accidentally committed to GitHub
+- **Action Taken:** 
+  1. Added CREDENTIALS.md to .gitignore
+  2. Removed previously-tracked CREDENTIALS.md from git
+  3. Committed security fix: "security: add CREDENTIALS.md to gitignore (critical fix)" (commit 2f124b6)
+- **Status:** ✅ FIXED — CREDENTIALS.md now protected from accidental commits
+- **Verification:** `git check-ignore CREDENTIALS.md` returns ✅ true (properly ignored)
+
+**Current Credentials (NEVER LOGGED):**
+- GitHub Personal Access Token (ghp_*) — Active, stored in CREDENTIALS.md only
+- Firebase service account key — Active, stored locally only
+- Telegram bot token — Active, stored in CREDENTIALS.md only
 
 ## Felix Case Study Reference
 **Model Reference: How to Build an Autonomous AI Business**
