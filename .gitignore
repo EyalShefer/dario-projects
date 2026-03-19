@@ -12,3 +12,4 @@ firebase-service-account.json
 build/
 dist/
 .worktrees/
+CREDENTIALS.md
